@@ -1,1 +1,1 @@
-web: gunicorn hellotest:app
+web: gunicorn notify:app
