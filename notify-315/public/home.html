@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>App Home Page</title>
+    </head>
+    <body>
+        <div>
+            <div
+                <h1 style="text-align: center; font-size: 150%;"> Notify </h1>
+                <!-- <img src="gears_006.jpeg" alt="Setdftings"> -->
+                <a style="display: inline; float: right; font-size: 50%;"" href="{{ url_for('settings') }}"><img src="settings.png" alt="Settings" width="100" height="100"></a>
+            </div>
+            <div style="width: 70%; float: left;">
+                <h3>Feed</h3>
+            </div>
+            <div style="width: 30%; float: right;">
+                <h3>Customize</h3>
+                <div>
+                    <h5>Categories</h5>
+                    <input type="checkbox" id="category1" name="category1" value="All">
+                    <label for="category1"> All</label><br>
+                    <input type="checkbox" id="category2" name="category2" value="Work">
+                    <label for="category2"> Work</label><br>
+                    <input type="checkbox" id="category3" name="category3" value="Personal">
+                    <label for="category3"> Personal</label><br>
+                </div>
+                <div>
+                    <h5>Sort</h5>
+                    <input type="radio" id="sort1" name="sorting" value="All Latest Recieved">
+                    <label for="sort1">All Latest Recieved</label><br>
+                    <input type="radio" id="sort2" name="sorting" value="All Earliest Recieved">
+                    <label for="sort2">All Earliest Recieved</label><br>
+                </div>
+                <div>
+                    <h5>Filter</h5>
+                    <label for="birthdaytime">From:</label>
+                    <input type="datetime-local" id="birthdaytime" name="birthdaytime">
+                    <br> <br>
+                    <label for="birthdaytime">To: &nbsp; &nbsp;</label>
+                    <input type="datetime-local" id="birthdaytime" name="birthdaytime">
+                </div>
+                <div>
+                    <h5>Find creator/influncer</h5>
+                    <form action="/notif_pool.csv">
+                        <label for="apisearch">Search:</label>
+                        <input type="apisearch" id="apisearch" name="apisearch">
+                        <input type="submit">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

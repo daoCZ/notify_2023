@@ -1,0 +1,10 @@
+#!/bin/sh
+'''exec' "/Users/AnzArkkala/Library/CloudStorage/OneDrive-TexasA&MUniversity/Y3_Spring/CSCE 315/Project 3/notfiy315/venv/bin/python3" "$0" "$@"
+' '''
+# -*- coding: utf-8 -*-
+import re
+import sys
+from twisted.scripts.twistd import run
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(run())
