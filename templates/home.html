@@ -42,10 +42,14 @@
                 </div>
                 <div>
                     <h5>Find creator/influncer</h5>
-                    <form action="/notif_pool.csv">
-                        <label for="apisearch">Search:</label>
-                        <input type="apisearch" id="apisearch" name="apisearch">
-                        <input type="submit">
+                    <form class="grid" action="/result" method="POST">
+
+                        <label for="Apisearch">Search:</label>
+                        <input type="text" id="name" name="name">
+                        <input type="Submit" class="file_submit">
+                        {% if name %}
+                        <p>{{name}}</p>
+                        {% endif %}
                     </form>
                 </div>
             </div>

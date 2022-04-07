@@ -3,7 +3,6 @@ api_key = 'AIzaSyDEvFHFs6x4mq7qlV-9nED16_BlZm_N5BE'
 youtube = build('youtube', 'v3', developerKey = api_key)
 
 def channel_search(user_query):
-    youtube = build('youtube', 'v3', developerKey = api_key)
     request = youtube.search().list(
             part="snippet",
             maxResults=5,
@@ -12,5 +11,9 @@ def channel_search(user_query):
         )
     response = request.execute()
     response_list = response.get('items')
-    return response_list
-
+    channel_list = []
+    for x in response_list:
+        channel_list.append(x.get('snippet').get('channelTitle'))
+    return channel_list;
+    #for x in response_list:
+    #    print(x.get('snippet').get('channelTitle'))
