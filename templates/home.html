@@ -4,6 +4,19 @@
         <meta charset="utf-8">
         <title>App Home Page</title>
         <link id="style" rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}"></link>
+        <script>
+            window.onload = function(){
+                var size = localStorage.getItem("fntSz");
+                var slide = document.getElementById('font-size');
+                if (size) {
+                    document.body.style.fontSize = size + 'px';
+                    slide.value = size;
+                }
+                else {
+                    document.body.style.fontSize = '12px';
+                }
+            };
+        </script>
     </head>
     <body style="background-color: aquamarine;">
         <div class="main">
@@ -47,7 +60,7 @@
                     <form class="grid" action="/result" method="POST">
 
                         <label for="Apisearch">Search:</label>
-                        <input type="text" id="name" name="name">
+                        <input type="text" id="name" name="name" style="background-color:rgb(10, 189, 126);">
                         <input type="Submit" class="file_submit" style="background-color:rgb(5, 150, 99);">
                         {% if name %}
                         <ul id="myList"></ul>

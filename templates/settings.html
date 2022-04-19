@@ -4,6 +4,20 @@
         <meta charset="utf-8">
         <title>App Settings</title>
         <link id="style" rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}"></link>
+        <!-- <script type="text/javascript" src="{{ url_for('static',filename='functions.js') }}"></script> -->
+        <script>
+            window.onload = function(){
+                var size = localStorage.getItem("fntSz");
+                var slide = document.getElementById('font-size');
+                if (size) {
+                    document.body.style.fontSize = size + 'px';
+                    slide.value = size;
+                }
+                else {
+                    document.body.style.fontSize = '12px';
+                }
+            };
+        </script>
     </head>
     <body style="background-color: aquamarine;">
         <div class="main">
@@ -14,7 +28,7 @@
             </div>
             <div>
             <div style="width: 50%; float: left;">
-                <h3>Connectivity</h3>
+                <h3 style="font-size: 100%;">Connectivity</h3>
                 <p align="center">
                     <a href="google/">
                     <img id="google"
@@ -34,14 +48,24 @@
                 ç</p>
             </div>
             <div style="width: 50%; float: right;">
-                <h3>Appearance</h3>
+                <h3 style="font-size: 100%;">Appearance</h3>
                 <div class="userText">
                     <!-- <h5>Text Size</h5> -->
                     <div class="container">
-                        <script src="{{url_for('static', filename='slidescript.js')}}"> </script>
-                        <input class="none" type="range" min="0" max="100" value="0" id="slider" step="1">
+                        <h4 style="font-size: 75%;">Change Text Size</h4>
+                        <input type="range" min="12" max="72" value="16" id="font-size" />
+                        <script>
+                            var slider = document.getElementById('font-size');
+            
+                            slider.addEventListener('input', function() {
+                                var size = slider.value;
+                                // this sets the body's font size property, but you can set whatever you need to
+                                document.body.style.fontSize = size + 'px';
+                                localStorage.setItem("fntSz", size);
+                            });
+                        </script>
                         
-                        <h1 id="name" class="changeMe name text-primary text-center">Mohamed Elsawy</h1>
+                        <p> text preview </p>
                     
                     </div>
                     <!-- <input type="submit"> -->
