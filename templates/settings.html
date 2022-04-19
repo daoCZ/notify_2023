@@ -3,26 +3,50 @@
     <head>
         <meta charset="utf-8">
         <title>App Settings</title>
+        <link id="style" rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}"></link>
     </head>
-    <body>
-        <div>
-            <div
+    <body style="background-color: aquamarine;">
+        <div class="main">
+            <div>
                 <h1 style="text-align: center; font-size: 150%;"> Settings </h1>
                 <!-- <img src="gears_006.jpeg" alt="Setdftings"> -->
-                <a style="display: inline; float: right; font-size: 50%;"" href="{{ url_for('home') }}"><img src="settings.png" alt="Home" width="100" height="100"></a>
+                <a style="display: inline; float: right; font-size: 50%;"" href="{{ url_for('home') }}"><img src="{{ url_for('static',filename='pics/settings.png') }}" alt="Home" width="80" height="80"></a>
             </div>
+            <div>
             <div style="width: 50%; float: left;">
                 <h3>Connectivity</h3>
+                <p align="center">
+                    <a href="google/">
+                    <img id="google"
+                        src="https://img.shields.io/badge/Google-Connect-brightgreen?style=for-the-badge&labelColor=black&logo=google"
+                        alt="Google"> <br>
+                    </a>
+                    <a href="twitter/">
+                    <img id="twitter"
+                        src="https://img.shields.io/badge/Twitter-Connect-brightgreen?style=for-the-badge&labelColor=black&logo=twitter"
+                        alt="Twitter"> <br>
+                    </a>
+                    <a href="facebook/">
+                    <img id="facebook"
+                        src="https://img.shields.io/badge/Facebook-Connect-brightgreen?style=for-the-badge&labelColor=black&logo=facebook"
+                        alt="Facebook"> <br>
+                    </a>
+                ç</p>
             </div>
             <div style="width: 50%; float: right;">
                 <h3>Appearance</h3>
-                <div>
+                <div class="userText">
                     <!-- <h5>Text Size</h5> -->
-                    <label for="txtsz">Text Size:</label>
-                    <br>
-                    <input type="range" id="points" name="points" min="0" max="20">
-                    <input type="submit">
+                    <div class="container">
+                        <script src="{{url_for('static', filename='slidescript.js')}}"> </script>
+                        <input class="none" type="range" min="0" max="100" value="0" id="slider" step="1">
+                        
+                        <h1 id="name" class="changeMe name text-primary text-center">Mohamed Elsawy</h1>
+                    
+                    </div>
+                    <!-- <input type="submit"> -->
                 </div>
+            </div>
             </div>
         </div>
     </body>

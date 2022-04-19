@@ -3,20 +3,22 @@
     <head>
         <meta charset="utf-8">
         <title>App Home Page</title>
+        <link id="style" rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}"></link>
     </head>
-    <body>
-        <div>
-            <div
+    <body style="background-color: aquamarine;">
+        <div class="main">
+            <div class="header">
                 <h1 style="text-align: center; font-size: 150%;"> Notify </h1>
                 <!-- <img src="gears_006.jpeg" alt="Setdftings"> -->
-                <a style="display: inline; float: right; font-size: 50%;"" href="{{ url_for('settings') }}"><img src="settings.png" alt="Settings" width="100" height="100"></a>
+                <a style="float: right; font-size: 50%;"" href="{{ url_for('settings') }}"><img src="{{ url_for('static',filename='pics/settings.png') }}" alt="Settings" width="80" height="80"></a>
             </div>
-            <div style="width: 70%; float: left;">
+            <div class="content">
+            <div class="windows" style="width: 65%; float: left;">
                 <h3>Feed</h3>
             </div>
-            <div style="width: 30%; float: right;">
+            <div class="windows" style="width: 35%; float: right;">
                 <h3>Customize</h3>
-                <div>
+                <div class="shift-left">
                     <h5>Categories</h5>
                     <input type="checkbox" id="category1" name="category1" value="All">
                     <label for="category1"> All</label><br>
@@ -25,14 +27,14 @@
                     <input type="checkbox" id="category3" name="category3" value="Personal">
                     <label for="category3"> Personal</label><br>
                 </div>
-                <div>
+                <div class="shift-left">
                     <h5>Sort</h5>
                     <input type="radio" id="sort1" name="sorting" value="All Latest Recieved">
                     <label for="sort1">All Latest Recieved</label><br>
                     <input type="radio" id="sort2" name="sorting" value="All Earliest Recieved">
                     <label for="sort2">All Earliest Recieved</label><br>
                 </div>
-                <div>
+                <div class="shift-left">
                     <h5>Filter</h5>
                     <label for="birthdaytime">From:</label>
                     <input type="datetime-local" id="birthdaytime" name="birthdaytime">
@@ -40,13 +42,13 @@
                     <label for="birthdaytime">To: &nbsp; &nbsp;</label>
                     <input type="datetime-local" id="birthdaytime" name="birthdaytime">
                 </div>
-                <div>
+                <div class="shift-left">
                     <h5>Find creator/influncer</h5>
                     <form class="grid" action="/result" method="POST">
 
                         <label for="Apisearch">Search:</label>
                         <input type="text" id="name" name="name">
-                        <input type="Submit" class="file_submit">
+                        <input type="Submit" class="file_submit" style="background-color:rgb(5, 150, 99);">
                         {% if name %}
                         <ul id="myList"></ul>
                         <!-- <script>
@@ -65,6 +67,7 @@
                         {% endif %}
                     </form>
                 </div>
+            </div>
             </div>
         </div>
     </body>
