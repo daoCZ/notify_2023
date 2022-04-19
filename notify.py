@@ -22,6 +22,7 @@ def settings():
 
 @app.route("/result", methods = ["POST", "GET"])
 def result():
+    error = False
     output = request.form.to_dict()
     namein = output["name"]
     request2 = youtube.search().list(
@@ -38,9 +39,12 @@ def result():
     if channel_list:
         name = channel_list
     else:
-        name = "Channel with name - "
-        name += namein
-        name += " - DOES NOT EXIST" 
+        error = True
+        error_msg = []
+        error_msg.append("Channel with name - " + namein + " - DOES NOT EXIST")
+        #name += namein
+        #name += " - DOES NOT EXIST" 
+        name = error_msg
   
     #Twitter Procedures
     api_key = 'dpCeHm2DJEwkvCpvtY6ihHQ5k'
@@ -61,10 +65,13 @@ def result():
        i = i + 1
 
     if i == 0:
-        name += "Twitter channel with name - "
-        name += namein
-        name += " - DOES NOT EXIST" 
-    else:
+        error = True
+        error_msg2 = []
+        error_msg2.append("Twitter channel with name - " + namein + " - DOES NOT EXIST" )
+        #name += namein
+        #name += " - DOES NOT EXIST" 
+        name = error_msg2
+    elif error == False:
         name = channel_list
 
       
