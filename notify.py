@@ -41,6 +41,33 @@ def result():
         name = "Channel with name - "
         name += namein
         name += " - DOES NOT EXIST" 
+  
+    #Twitter Procedures
+    api_key = 'dpCeHm2DJEwkvCpvtY6ihHQ5k'
+    api_key_secret = '9vQly1Ep2g0YFZC1vkgiWG1g6rw3QR6PTyLlAzoDD1ClevYMkq'
+
+    access_token = '1511094339400835073-To1THLCtzO59Sr4qZnHtGYKvKy1NXt'
+    access_token_secret = 'hsWJEc7bYsrpabn78rRrP6jkbRlc4qESZXnIlbzREkUFY'
+    auth = tweepy.OAuthHandler(api_key, api_key_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
+    # user tweets
+    user = namein
+    limit=5
+    tweets = tweepy.Cursor(api.user_timeline, screen_name=user, count=200, tweet_mode='extended').items(limit)
+    i = 0
+    for tweet in tweets:
+       channel_list.append([tweet.user.screen_name, tweet.full_text])
+       i = i + 1
+
+    if i == 0:
+        name += "Twitter channel with name - "
+        name += namein
+        name += " - DOES NOT EXIST" 
+    else:
+        name = channel_list
+
+      
     return render_template("home.html", name = name)
     #for x in response_list:
     #    print(x.get('snippet').get('channelTitle'))

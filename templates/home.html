@@ -60,7 +60,7 @@
                     <form class="grid" action="/result" method="POST">
 
                         <label for="Apisearch">Search:</label>
-                        <input type="text" id="name" name="name" style="background-color:rgb(10, 189, 126);">
+                        <input type="text" id="name" name="name">
                         <input type="Submit" class="file_submit" style="background-color:rgb(5, 150, 99);">
                         {% if name %}
                         <ul id="myList"></ul>
@@ -76,36 +76,12 @@
                                 list.appendChild(li);
                             });
                         </script> -->
-                        <p>5 Most Relevant Creators Related To Search:<br> {{name}}</p>
+                        <p>5 Most Relevant Creators Related To Search:<br> {{name[0] + " " + name[1] + " " + name[2] + " "+ name[3] + " " + name[4]}}</p>
+                        <p>5 Most Recent Tweets:<br> {{name[5][1] + " " + name[6][1] + " " + name[7][1] + " "+ name[8][1] + " " + name[9][1]}}</p>
                         {% endif %}
                     </form>
-                </div>
-                
-                <div>
-                    <h5>Find creator/influncer</h5>
-                    <form class="grid" action="/tw_result" method="POST">
-
-                        <label for="Apisearch_tw">Search Tweets:</label>
-                        <input type="text" id="name" name="name">
-                        <input type="Submit" class="file_submit">
-                        {% if name %}
-                        <ul id="myList"></ul>
-                        <!-- <script>
-                            var counts = {{ name|tojson }};
-                            let data = ["Ram", "Shyam", "Sita", "Gita"];
-                        
-                            let list = document.getElementById("myList");
-                        
-                            data.forEach((item) => {
-                                let li = document.createElement("li");
-                                li.innerText = item;
-                                list.appendChild(li);
-                            });
-                        </script> -->
-                        <p>5 Tweets from User:<br> {{name}}</p>
-                        {% endif %}
-                    </form>
-                </div>
+                </div>  
+        
             </div>
             </div>
         </div>
