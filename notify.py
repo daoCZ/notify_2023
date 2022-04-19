@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request
 from googleapiclient.discovery import build
 import tweepy
-import configparser
-import pandas as pd
+#import configparser
+#import pandas as pd
 
 api_key = 'AIzaSyDEvFHFs6x4mq7qlV-9nED16_BlZm_N5BE'
 youtube = build('youtube', 'v3', developerKey = api_key)
