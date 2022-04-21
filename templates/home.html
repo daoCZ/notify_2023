@@ -87,7 +87,8 @@
                         </script> -->
                         <p>5 Most Relevant Creators Related To Search:<br> {{name[0] + " " + name[1] + " " + name[2] + " "+ name[3] + " " + name[4]}}</p>
                         <p>5 Most Recent Tweets:<br> {{name[5][1] + " " + name[6][1] + " " + name[7][1] + " "+ name[8][1] + " " + name[9][1]}}</p>
-                        {% else %}
+                        {% elif name|length == 1 %}
+                        <p><br> {{name[0]}}</p>
                         <!-- error handling for twitter-->
                         {% endif %}
                     </form>
