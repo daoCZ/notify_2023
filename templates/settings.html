@@ -16,15 +16,25 @@
                 else {
                     document.body.style.fontSize = '12px';
                 }
+
+                var style = document.getElementsByTagName('link')[0];
+                if (localStorage.getItem("style") == "contrast.css") {
+                    style.setAttribute('href', "{{ url_for('static',filename='styles/contrast') }}.css");
+                    document.getElementById('contrast').checked = true;
+                    document.getElementById('home').src = "{{ url_for('static',filename='pics/homeWhite.png') }}";
+                }
+                else {
+                    style.setAttribute('href', "{{ url_for('static',filename='styles/style') }}.css");
+                }
             };
         </script>
     </head>
-    <body style="background-color: aquamarine;">
+    <body>
         <div class="main">
             <div>
                 <h1 style="text-align: center; font-size: 150%;"> Settings </h1>
                 <!-- <img src="gears_006.jpeg" alt="Setdftings"> -->
-                <a style="display: inline; float: right; font-size: 50%;"" href="{{ url_for('home') }}"><img src="{{ url_for('static',filename='pics/settings.png') }}" alt="Home" width="80" height="80"></a>
+                <a style="display: inline; float: right; font-size: 50%;"" href="{{ url_for('home') }}"><img src="{{ url_for('static',filename='pics/home.png') }}" alt="Home" width="80" height="80" id="home"></a>
             </div>
             <div>
             <div style="width: 50%; float: left;">
@@ -65,8 +75,38 @@
                             });
                         </script>
                         
-                        <p> text preview </p>
+                        <br>
+                        <br>
+                        <br>
                     
+                    </div>
+                    <div style="flex-direction:row; display: flex;">
+                        <div>
+                        <label class="switch">
+                            <input type="checkbox" id="contrast">
+                            <span class="slider round"></span>
+                        </label>
+                        </div>
+                        <div style="width: 80%;">
+                            <h4 style="font-size: 75%;">Toggle High Contrast Mode</h4>
+                        </div>
+                        <script>
+                            var toggle = document.getElementById('contrast')
+                            var style = document.getElementsByTagName('link')[0];
+
+                            toggle.addEventListener('input', function() {
+                                if(toggle.checked) {
+                                    style.setAttribute('href', "{{ url_for('static',filename='styles/contrast') }}.css")
+                                    localStorage.setItem("style", "contrast.css");
+                                    document.getElementById('home').src = "{{ url_for('static',filename='pics/homeWhite.png') }}";
+                                }
+                                else{
+                                    style.setAttribute('href', "{{ url_for('static',filename='styles/style') }}.css");
+                                    localStorage.setItem("style", "style.css");
+                                    document.getElementById('home').src = "{{ url_for('static',filename='pics/home.png') }}";
+                                }
+                            });
+                        </script>
                     </div>
                     <!-- <input type="submit"> -->
                 </div>

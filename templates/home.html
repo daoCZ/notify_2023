@@ -15,6 +15,15 @@
                 else {
                     document.body.style.fontSize = '12px';
                 }
+                // not working for background change
+                var style = document.getElementsByTagName('link')[0];
+                if (localStorage.getItem("style") == "contrast.css") {
+                    style.setAttribute('href', "{{ url_for('static',filename='styles/contrast') }}.css");
+                    document.getElementById('home').src = "{{ url_for('static',filename='pics/settingsWhite.jpeg') }}";
+                }
+                else {
+                    style.setAttribute('href', "{{ url_for('static',filename='styles/style') }}.css");
+                }
             };
         </script>
     </head>
@@ -79,7 +88,7 @@
                         <p>5 Most Relevant Creators Related To Search:<br> {{name[0] + " " + name[1] + " " + name[2] + " "+ name[3] + " " + name[4]}}</p>
                         <p>5 Most Recent Tweets:<br> {{name[5][1] + " " + name[6][1] + " " + name[7][1] + " "+ name[8][1] + " " + name[9][1]}}</p>
                         {% else %}
-                        <p><br> {{name[0]}}</p>
+                        <!-- error handling for twitter-->
                         {% endif %}
                     </form>
                 </div>  
