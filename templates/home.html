@@ -72,24 +72,28 @@
                         <input type="text" id="name" name="name" style="background-color:rgb(6, 201, 133); outline-width: 2px; outline-style:double;">
                         <input type="Submit" class="file_submit" style="background-color:rgb(5, 150, 99);">
                         {% if name|length > 1 %}
-                        <ul id="myList"></ul>
-                        <!-- <script>
-                            var counts = {{ name|tojson }};
-                            let data = ["Ram", "Shyam", "Sita", "Gita"];
-                        
-                            let list = document.getElementById("myList");
-                        
-                            data.forEach((item) => {
-                                let li = document.createElement("li");
-                                li.innerText = item;
-                                list.appendChild(li);
-                            });
-                        </script> -->
-                        <p>5 Most Relevant Creators Related To Search:<br> {{name[0] + " " + name[1] + " " + name[2] + " "+ name[3] + " " + name[4]}}</p>
-                        <p>5 Most Recent Tweets:<br> {{name[5][1] + " " + name[6][1] + " " + name[7][1] + " "+ name[8][1] + " " + name[9][1]}}</p>
-                        {% elif name|length == 1 %}
-                        <p><br> {{name[0]}}</p>
-                        <!-- error handling for twitter-->
+                            {% if name[0] is not string %}
+                                <ul id="myList"></ul>                            
+                                <p>5 Most Relevant Creators Related To Search: <br>
+                                {% for item in name[0] %}
+                                    {{item}}<br>
+                                {% endfor %}
+                                </p>
+
+                            {% elif name[0] is string %}
+                                <p><br> {{name[0]}}</p>
+                                <!-- error handling for twitter-->
+                            {% endif %}
+
+                            {% if name[1] is not string %}
+                            <p>5 most recent tweeets from Resulting Account:<br>
+                            {% for item in name[1] %}
+                            {{item}}<br>
+                            {% endfor %}
+                            </p>
+                            {% elif name[1] is string %}
+                            <p><br>{{name[1]}}</p>
+                            {% endif %}
                         {% endif %}
                     </form>
                 </div>  

@@ -33,18 +33,14 @@ def result():
         )
     response = request2.execute()
     response_list = response.get('items')
-    channel_list = []
+    name = ["",""]
+    youtube_list = []
     for x in response_list:
-        channel_list.append(x.get('snippet').get('channelTitle'))
-    if channel_list:
-        name = channel_list
+        youtube_list.append(x.get('snippet').get('channelTitle'))
+    if youtube_list:
+        name[0] = youtube_list
     else:
-        error = True
-        error_msg = []
-        error_msg.append("Channel with name - " + namein + " - DOES NOT EXIST")
-        #name += namein
-        #name += " - DOES NOT EXIST" 
-        name = error_msg
+        name[0] = "No YouTube channel results for your search."
   
     #Twitter Procedures
     api_key = 'dpCeHm2DJEwkvCpvtY6ihHQ5k'
@@ -59,22 +55,16 @@ def result():
     user = namein
     limit=5
     tweets = tweepy.Cursor(api.user_timeline, screen_name=user, count=200, tweet_mode='extended').items(limit)
-    i = 0
+    twitter_list = []
     for tweet in tweets:
-       channel_list.append([tweet.user.screen_name, tweet.full_text])
-       i = i + 1
+       twitter_list.append([tweet.user.screen_name, tweet.full_text])
 
-    if i == 0:
-        error = True
-        error_msg2 = []
-        error_msg2.append("Twitter channel with name - " + namein + " - DOES NOT EXIST" )
-        #name += namein
-        #name += " - DOES NOT EXIST" 
-        name = error_msg2
-    elif error == False:
-        name = channel_list
+    if twitter_list:
+        name[1] = twitter_list
+    else:
+        name[1] = "No Tweets from any account resulting from your search."
 
-      
+    print(name)
     return render_template("home.html", name = name)
     #for x in response_list:
     #    print(x.get('snippet').get('channelTitle'))
