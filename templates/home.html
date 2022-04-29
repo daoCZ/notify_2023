@@ -6,6 +6,17 @@
         <link id="style" rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}"></link>
         <script>
             window.onload = function(){
+                var style = document.getElementsByTagName('link')[0];
+                var test = localStorage.getItem("style");
+                
+                if (test == "contrast.css") {
+                    style.setAttribute('href', "{{ url_for('static',filename='styles/contrast') }}.css");
+                    document.getElementById('home').src = "{{ url_for('static',filename='pics/settingsWhite.jpeg') }}";
+                }
+                else {
+                    style.setAttribute('href', "{{ url_for('static',filename='styles/style') }}.css");
+                }
+
                 var size = localStorage.getItem("fntSz");
                 var slide = document.getElementById('font-size');
                 if (size) {
@@ -15,24 +26,16 @@
                 else {
                     document.body.style.fontSize = '12px';
                 }
-                // not working for background change
-                var style = document.getElementsByTagName('link')[0];
-                if (localStorage.getItem("style") == "contrast.css") {
-                    style.setAttribute('href', "{{ url_for('static',filename='styles/contrast') }}.css");
-                    document.getElementById('home').src = "{{ url_for('static',filename='pics/settingsWhite.jpeg') }}";
-                }
-                else {
-                    style.setAttribute('href', "{{ url_for('static',filename='styles/style') }}.css");
-                }
+                
             };
         </script>
     </head>
-    <body style="background-color: aquamarine;">
+    <body>
         <div class="main">
             <div class="header">
                 <h1 style="text-align: center; font-size: 150%;"> Notify </h1>
                 <!-- <img src="gears_006.jpeg" alt="Setdftings"> -->
-                <a style="float: right; font-size: 50%;"" href="{{ url_for('settings') }}"><img src="{{ url_for('static',filename='pics/settings.png') }}" alt="Settings" width="80" height="80"></a>
+                <a style="float: right; font-size: 50%;"" href="{{ url_for('settings') }}"><img src="{{ url_for('static',filename='pics/settings.png') }}" alt="Settings" width="80" height="80" id="home"></a>
             </div>
             <div class="content">
             <div class="windows" style="width: 65%; float: left;">
@@ -69,8 +72,8 @@
                     <form class="grid" action="/result" method="POST">
 
                         <label for="Apisearch">Search:</label>
-                        <input type="text" id="name" name="name" style="background-color:rgb(6, 201, 133); outline-width: 2px; outline-style:double;">
-                        <input type="Submit" class="file_submit" style="background-color:rgb(5, 150, 99);">
+                        <input type="text" id="name" name="name">
+                        <input type="Submit" class="file_submit">
                         {% if name|length > 1 %}
                             {% if name[0] is not string %}
                                 <ul id="myList"></ul>                            

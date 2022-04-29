@@ -41,7 +41,7 @@ def result():
         name[0] = youtube_list
     else:
         name[0] = "No YouTube channel results for your search."
-  
+
     #Twitter Procedures
     api_key = 'dpCeHm2DJEwkvCpvtY6ihHQ5k'
     api_key_secret = '9vQly1Ep2g0YFZC1vkgiWG1g6rw3QR6PTyLlAzoDD1ClevYMkq'
@@ -57,7 +57,7 @@ def result():
     tweets = tweepy.Cursor(api.user_timeline, screen_name=user, count=200, tweet_mode='extended').items(limit)
     twitter_list = []
     for tweet in tweets:
-       twitter_list.append([tweet.user.screen_name, tweet.full_text])
+        twitter_list.append([tweet.user.screen_name, tweet.full_text])
 
     if twitter_list:
         name[1] = twitter_list

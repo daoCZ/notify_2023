@@ -27,15 +27,18 @@ h4 {
 }
 
 .main {
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
     display: flex;
     flex-direction: column;
+    height:100vh;
 }
 
 .windows {
-    background-color: rgb(30, 187, 135);
+    background-color: rgb(255, 255, 255, .35);
     margin: 1%;
     height: 100vh;
+    border-radius: 4%;
+    box-shadow: 10px 10px 10px;
 }
 
 .content {
@@ -60,7 +63,7 @@ input[type=range]::-webkit-slider-runnable-track {
     cursor: pointer;
     animate: 0.2s;
     box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
-    background: #007bff;
+    background: rgb(255, 255, 255, .35);
     border-radius: 25px;
     border: 0px solid #000101;
 }
@@ -77,13 +80,34 @@ input[type=range]::-webkit-slider-thumb {
     margin-top: -3.6px;
 }
 input[type=range]:focus::-webkit-slider-runnable-track {
-background: #007bff;
+background: rgb(255, 255, 255, .35);
 }
 
-body {
+/* body {
 padding: 30px;
 text-transform: capitalize;
-background-color: aquamarine;
+background-image: linear-gradient(to right, ));
+/* background-color: aquamarine;
+} */
+
+body {
+	background: linear-gradient(-45deg, #6200ff, #9a3ce7, #926af0, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+  /* height: 100vh; */
+  margin: 1%;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
 
 /* The switch - the box around the slider */
@@ -147,4 +171,14 @@ background-color: aquamarine;
   
   .slider.round:before {
     border-radius: 50%;
+  }
+
+  #name{
+    background-color: rgb(255, 255, 255, .35);
+    outline-width: 2px; 
+    outline-style:double;
+  }
+
+  .file_submit{
+    background-color: rgb(255, 255, 255, .50);
   }

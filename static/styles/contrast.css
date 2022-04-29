@@ -149,3 +149,17 @@ text-transform: capitalize;
   .slider.round:before {
     border-radius: 50%;
   }
+
+  #name{
+    background-color:rgb(222, 226, 225); 
+    outline-width: 2px; 
+    outline-style:double;
+  }
+
+  .file_submit{
+    background-color:rgb(201, 204, 203);
+  }
+
+  #birthdaytime{
+    color: white;
+  }
