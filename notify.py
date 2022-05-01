@@ -22,7 +22,6 @@ def settings():
 
 @app.route("/result", methods = ["POST", "GET"])
 def result():
-    error = False
     output = request.form.to_dict()
     namein = output["name"]
     request2 = youtube.search().list(
@@ -36,12 +35,18 @@ def result():
     name = ["",""]
     youtube_list = []
     for x in response_list:
-        youtube_list.append(x.get('snippet').get('channelTitle'))
+        youtube_entry = []
+        youtube_entry.append(x.get('snippet').get('channelTitle'))
+        youtube_entry.append(x.get('snippet').get('thumbnails').get('high').get('url'))
+        youtube_entry.append("https://www.youtube.com/channel/" + x.get('snippet').get('channelId'))
+        print(youtube_entry[2])
+        youtube_list.append(youtube_entry)
+
     if youtube_list:
         name[0] = youtube_list
     else:
         name[0] = "No YouTube channel results for your search."
-
+  
     #Twitter Procedures
     api_key = 'dpCeHm2DJEwkvCpvtY6ihHQ5k'
     api_key_secret = '9vQly1Ep2g0YFZC1vkgiWG1g6rw3QR6PTyLlAzoDD1ClevYMkq'
@@ -51,20 +56,29 @@ def result():
     auth = tweepy.OAuthHandler(api_key, api_key_secret)
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
-    # user tweets
-    user = namein
-    limit=5
-    tweets = tweepy.Cursor(api.user_timeline, screen_name=user, count=200, tweet_mode='extended').items(limit)
     twitter_list = []
-    for tweet in tweets:
-        twitter_list.append([tweet.user.screen_name, tweet.full_text])
+    users = api.search_users(q = namein, count=5)
+    for user in users:
+        id = user.id_str
+        pic_url = user.profile_image_url
+        twitter_item = []
+        twitter_item.append(user.screen_name)
+        twitter_item.append("https://twitter.com/i/user/" + id)
+        twitter_item.append(pic_url)
+        twitter_list.append(twitter_item)
+    # user tweets
+    #user = namein
+    #limit=5
+    #tweets = tweepy.Cursor(api.user_timeline, screen_name=user, count=200, tweet_mode='extended').items(limit)
+    #twitter_list = []
+    #for tweet in tweets:
+    #   twitter_list.append([tweet.user.screen_name, tweet.full_text])
 
     if twitter_list:
         name[1] = twitter_list
     else:
         name[1] = "No Tweets from any account resulting from your search."
 
-    print(name)
     return render_template("home.html", name = name)
     #for x in response_list:
     #    print(x.get('snippet').get('channelTitle'))
