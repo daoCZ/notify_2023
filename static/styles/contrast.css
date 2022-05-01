@@ -9,6 +9,8 @@
 }
 body {
     font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color:#fff;
+    background-color: rgb(0, 0, 0);
 }
 h2 {
     font-size: 50px;
@@ -27,30 +29,19 @@ h4 {
 }
 
 .main {
-    /* background-color: aquamarine; */
+    background-color: rgb(0, 0, 0);
     display: flex;
     flex-direction: column;
-    height:100vh;
 }
 
 .windows {
-    background-color: rgb(255, 255, 255, .35);
+    background-color: rgb(37, 37, 37);
     margin: 1%;
     height: 100vh;
-    border-radius: 4%;
-    box-shadow: 10px 10px 10px;
 }
 
 .content {
     display: flex;
-}
-.yt_results{
-  background-color: rgb(255, 255, 255);
-  border: 1px solid rgb(252, 0, 0);
-  margin:1%;
-  text-align: center;
-  border-radius: 25px;
-  text-align: center;
 }
 
 .shift-left{
@@ -71,7 +62,7 @@ input[type=range]::-webkit-slider-runnable-track {
     cursor: pointer;
     animate: 0.2s;
     box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
-    background: rgb(255, 255, 255, .35);
+    background: #007bff;
     border-radius: 25px;
     border: 0px solid #000101;
 }
@@ -88,34 +79,12 @@ input[type=range]::-webkit-slider-thumb {
     margin-top: -3.6px;
 }
 input[type=range]:focus::-webkit-slider-runnable-track {
-background: rgb(255, 255, 255, .35);
+background: #007bff;
 }
-
-/* body {
-padding: 30px;
-text-transform: capitalize;
-background-image: linear-gradient(to right, ));
-/* background-color: aquamarine;
-} */
 
 body {
-	background: linear-gradient(-45deg, #6200ff, #9a3ce7, #926af0, #23d5ab);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-  /* height: 100vh; */
-  margin: 1%;
-}
-
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+padding: 30px;
+text-transform: capitalize;
 }
 
 /* The switch - the box around the slider */
@@ -182,11 +151,15 @@ body {
   }
 
   #name{
-    background-color: rgb(255, 255, 255, .35);
+    background-color:rgb(222, 226, 225); 
     outline-width: 2px; 
     outline-style:double;
   }
 
   .file_submit{
-    background-color: rgb(255, 255, 255, .50);
+    background-color:rgb(201, 204, 203);
+  }
+
+  #birthdaytime{
+    color: white;
   }

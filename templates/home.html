@@ -4,13 +4,83 @@
         <meta charset="utf-8">
         <title>App Home Page</title>
         <link id="style" rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}"></link>
+        <script>
+            window.onload = function(){
+                var style = document.getElementsByTagName('link')[0];
+                var test = localStorage.getItem("style");
+                
+                if (test == "contrast.css") {
+                    style.setAttribute('href', "{{ url_for('static',filename='styles/contrast') }}.css");
+                    document.getElementById('home').src = "{{ url_for('static',filename='pics/settingsWhite.jpeg') }}";
+                }
+                else {
+                    style.setAttribute('href', "{{ url_for('static',filename='styles/style') }}.css");
+                }
+
+                var size = localStorage.getItem("fntSz");
+                var slide = document.getElementById('font-size');
+                if (size) {
+                    document.body.style.fontSize = size + 'px';
+                    slide.value = size;
+                }
+                else {
+                    document.body.style.fontSize = '12px';
+                }
+                
+            };
+        </script>
     </head>
-    <body style="background-color: aquamarine;">
+    <body>
+        <script>
+            window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '1180590589381831',
+                cookie     : true,
+                xfbml      : true,
+                version    : 'v2.8'
+            });
+                
+            
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+                
+            };
+        
+            (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+       
+            function statusChangeCallback(response){
+                if(response.status === 'connected'){
+                    console.log("You're logged in!")
+                }
+                else{
+                    console.log("Not logged in.")
+                }
+            }
+       
+            function checkLoginState() {
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+            }
+       </script>
+
+        <fb:login-button 
+            scope="public_profile,email"
+            onlogin="checkLoginState();">
+        </fb:login-button>
+
         <div class="main">
             <div class="header">
                 <h1 style="text-align: center; font-size: 150%;"> Notify </h1>
                 <!-- <img src="gears_006.jpeg" alt="Setdftings"> -->
-                <a style="float: right; font-size: 50%;"" href="{{ url_for('settings') }}"><img src="{{ url_for('static',filename='pics/settings.png') }}" alt="Settings" width="80" height="80"></a>
+                <a style="float: right; font-size: 50%;"" href="{{ url_for('settings') }}"><img src="{{ url_for('static',filename='pics/settings.png') }}" alt="Settings" width="80" height="80" id="home"></a>
             </div>
             <div class="content">
             <div class="windows" style="width: 65%; float: left;">
@@ -48,51 +118,43 @@
 
                         <label for="Apisearch">Search:</label>
                         <input type="text" id="name" name="name">
-                        <input type="Submit" class="file_submit" style="background-color:rgb(5, 150, 99);">
-                        {% if name %}
-                        <ul id="myList"></ul>
-                        <!-- <script>
-                            var counts = {{ name|tojson }};
-                            let data = ["Ram", "Shyam", "Sita", "Gita"];
-                        
-                            let list = document.getElementById("myList");
-                        
-                            data.forEach((item) => {
-                                let li = document.createElement("li");
-                                li.innerText = item;
-                                list.appendChild(li);
-                            });
-                        </script> -->
-                        <p>5 Most Relevant Creators Related To Search:<br> {{name}}</p>
-                        {% endif %}
-                    </form>
-                </div>
-                
-                <div>
-                    <h5>Find creator/influncer</h5>
-                    <form class="grid" action="/tw_result" method="POST">
-
-                        <label for="Apisearch_tw">Search Tweets:</label>
-                        <input type="text" id="name" name="name">
                         <input type="Submit" class="file_submit">
-                        {% if name %}
-                        <ul id="myList"></ul>
-                        <!-- <script>
-                            var counts = {{ name|tojson }};
-                            let data = ["Ram", "Shyam", "Sita", "Gita"];
-                        
-                            let list = document.getElementById("myList");
-                        
-                            data.forEach((item) => {
-                                let li = document.createElement("li");
-                                li.innerText = item;
-                                list.appendChild(li);
-                            });
-                        </script> -->
-                        <p>5 Tweets from User:<br> {{name}}</p>
+                        {% if name|length > 1 %}
+                            {% if name[0] is not string %}
+                                <ul id="myList"></ul>                            
+                                <p>Related Youtube Channels: <br>
+                                {% for item in name[0] %}
+                                <div class = "yt_results">
+                                    {{item[0]}}
+                                    <img src={{item[1]}} alt="image" style="vertical-align:middle;width:50px;height:50px;">
+                                    <a href={{item[2]}}>Go to channel!</a><br>
+                                </div>
+                                {% endfor %}
+                                </p>
+
+                            {% elif name[0] is string %}
+                                <p><br> {{name[0]}}</p>
+                                <!-- error handling for twitter-->
+                            {% endif %}
+
+                            {% if name[1] is not string %}
+                            <p>Related twitter accounts:<br>
+                            
+                            {% for item in name[1] %}
+                            <div class = "yt_results">
+                                {{item[0]}}
+                                <img src={{item[2]}} alt="image" style="vertical-align:middle;width:50px;height:50px;">
+                                <a href={{item[1]}}>Go to account!</a><br>
+                            </div>
+                            {% endfor %}
+                            </p>
+                            {% elif name[1] is string %}
+                            <p><br>{{name[1]}}</p>
+                            {% endif %}
                         {% endif %}
                     </form>
-                </div>
+                </div>  
+        
             </div>
             </div>
         </div>
