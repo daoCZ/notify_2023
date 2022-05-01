@@ -21,6 +21,7 @@ def settings():
 
 
 @app.route("/result", methods = ["POST", "GET"])
+
 def result():
     output = request.form.to_dict()
     namein = output["name"]
