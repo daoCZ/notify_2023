@@ -1,6 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from googleapiclient.discovery import build
+from flask_restful import Api
+from authlib.integrations.flask_client import OAuth
 import tweepy
+import os
+
 #import configparser
 #import pandas as pd
 
@@ -9,6 +13,9 @@ youtube = build('youtube', 'v3', developerKey = api_key)
 
 app = Flask(__name__)
 
+api = Api(app)
+
+oauth = OAuth(app)
 
 @app.route('/')
 @app.route("/home")
@@ -52,7 +59,6 @@ def result():
 def tw_result():
     output = request.form.to_dict()
     namein = output["name"]
-
 
     #Twitter Code below
     api_key = 'dpCeHm2DJEwkvCpvtY6ihHQ5k'
@@ -101,6 +107,36 @@ def tw_result():
     return render_template("home.html", name = name)
     #df = pd.DataFrame(data, columns=columns)
 
+
+@app.route('/twitter/')
+def twitter():
+   
+    # Twitter Oauth Config
+    TWITTER_CLIENT_ID = os.environ.get('TWITTER_CLIENT_ID')
+    TWITTER_CLIENT_SECRET = os.environ.get('TWITTER_CLIENT_SECRET')
+    oauth.register(
+        name='twitter',
+        client_id=TWITTER_CLIENT_ID,
+        client_secret=TWITTER_CLIENT_SECRET,
+        request_token_url='https://api.twitter.com/oauth/request_token',
+        request_token_params=None,
+        access_token_url='https://api.twitter.com/oauth/access_token',
+        access_token_params=None,
+        authorize_url='https://api.twitter.com/oauth/authenticate',
+        authorize_params=None,
+        api_base_url='https://api.twitter.com/1.1/',
+        client_kwargs=None,
+    )
+    redirect_uri = url_for('twitter_auth', _external=True)
+    return oauth.twitter.authorize_redirect(redirect_uri)
+ 
+@app.route('/twitter/auth/')
+def twitter_auth():
+    token = oauth.twitter.authorize_access_token()
+    resp = oauth.twitter.get('account/verify_credentials.json')
+    profile = resp.json()
+    print(" Twitter User", profile)
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug= True, port=5000)
