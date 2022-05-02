@@ -26,10 +26,30 @@
                 else {
                     style.setAttribute('href', "{{ url_for('static',filename='styles/style') }}.css");
                 }
+                // if (localStorage.getItem("style") == "contrast.css") {
+                //     if (localStorage.getItem("blueMode") == "yellow") {
+                //         document.body.style.color = 'LemonChiffon';
+                //         document.getElementById('blueLight').checked = true;
+                //     }
+                //     else {
+                //         document.body.style.color = 'White';
+                //         document.getElementById('blueLight').checked = false;
+                //     }
+                // }
+                // else {
+                //     document.body.style.color = 'Black';
+                //     if (localStorage.getItem("blueMode") == "yellow") {
+                //         document.getElementById('blueLight').checked = true;
+                //     }
+                //     else {
+                //         document.getElementById('blueLight').checked = false;
+                //     }
+                // }
             };
         </script>
     </head>
     <body>
+        
         <div class="main">
             <div>
                 <h1 style="text-align: center; font-size: 150%;"> Settings </h1>
@@ -49,11 +69,6 @@
                     <img id="twitter"
                         src="https://img.shields.io/badge/Twitter-Connect-brightgreen?style=for-the-badge&labelColor=black&logo=twitter"
                         alt="Twitter"> <br>
-                    </a>
-                    <a href="facebook/">
-                    <img id="facebook"
-                        src="https://img.shields.io/badge/Facebook-Connect-brightgreen?style=for-the-badge&labelColor=black&logo=facebook"
-                        alt="Facebook"> <br>
                     </a>
                 </p>
             </div>
@@ -99,13 +114,54 @@
                                     style.setAttribute('href', "{{ url_for('static',filename='styles/contrast') }}.css")
                                     localStorage.setItem("style", "contrast.css");
                                     document.getElementById('home').src = "{{ url_for('static',filename='pics/homeWhite.png') }}";
+                                    if(toggle2.checked) {
+                                        document.body.style.color = 'LemonChiffon';
+                                    }
+                                    else {
+                                        document.body.style.color = 'White';
+                                    }
+                                    
                                 }
                                 else{
                                     style.setAttribute('href', "{{ url_for('static',filename='styles/style') }}.css");
                                     localStorage.setItem("style", "style.css");
                                     document.getElementById('home').src = "{{ url_for('static',filename='pics/home.png') }}";
+                                    document.body.style.color = 'Black';
                                 }
                             });
+                        </script>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="flex-direction:row; display: flex;">
+                        <div>
+                        <label class="switch">
+                            <input type="checkbox" id="blueLight">
+                            <span class="slider round"></span>
+                        </label>
+                        </div>
+                        <div style="width: 80%;">
+                            <h4 style="font-size: 75%;">Toggle Blue Light Filter</h4>
+                        </div>
+                        <script>
+                            var toggle2 = document.getElementById('blueLight');
+
+                            toggle2.addEventListener('input', function() {
+                                if (localStorage.getItem("style") == "contrast.css") {
+                                    if(toggle2.checked) {
+                                        document.body.style.color = 'LemonChiffon';
+                                        localStorage.setItem("blueMode", "yellow");
+                                    }
+                                    else{
+                                        document.body.style.color = 'White';
+                                        localStorage.setItem("blueMode", "white");
+                                    }
+                                }
+                                else {
+                                    document.body.style.color = 'Black';
+                                }
+                            }
+                            );
                         </script>
                     </div>
                     <!-- <input type="submit"> -->
