@@ -112,9 +112,9 @@
                     if(feed.data[i].message){
                         output += `${feed.data[i].message}`
                     }
-                    //if(feed.data[i].full_picture){
-                    //    output += `${feed.data[i].full_picture}`;
-                   //}
+                    if(feed.data[i].full_picture){
+                        output += `${feed.data[i].full_picture}`;
+                   }
                     output += "</div>";
                 }
                 document.getElementById('feed').innerHTML = output;
