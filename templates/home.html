@@ -60,7 +60,8 @@
        
             function statusChangeCallback(response){
                 if(response.status === 'connected'){
-                    console.log("You're logged in!")
+                    testAPI();
+                    console.log("You're logged in!");
                     setElements(true);
                 }
                 else{
@@ -97,24 +98,25 @@
             function testAPI(){
                 FB.api('/me/feed', function(response){
                     if(response && !response.error){
-                        buildFeed(response);
+                        console.log(response);
+                        //buildFeed(response);
                     }
                 });
             }
 
-            function buildFeed(feed){
-                let output = '<h3>Latest Post</h3>';
-                for(let i in feed.data){
-                    if(feed.data[i].message){
-                        output += `
-                        <div class="well">
-                            ${feed.data[i].message}
-                        </div>
-                        `;
-                    }
-                }
-                document.getElementById('feed').innerHTML = output;
-            }
+            //function buildFeed(feed){
+            //    let output = '<h3>Latest Post</h3>';
+            //    for(let i in feed.data){
+           //         if(feed.data[i].message){
+           //             output += `
+           //             <div class="well">
+           //                 ${feed.data[i].message}
+           //             </div>
+           //             `;
+           //         }
+            //    }
+          //      document.getElementById('feed').innerHTML = output;
+          //  }
        </script>
 
        <li><a id="logout" href="#" onclick="logout()">Logout</a></li>
@@ -134,7 +136,7 @@
             <div class="windows" style="width: 65%; float: left;">
                 <h3>Feed</h3>
                 <div id="feed">
-                    
+                    hy
                 </div>
             </div>
             <div class="windows" style="width: 35%; float: right;">
