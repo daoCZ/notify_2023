@@ -5,7 +5,7 @@
         <title>App Home Page</title>
         <link id="style" rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}"></link>
         <style media="screen">
-            #logout{display:none}
+            #logout, #feed{display:none}
         </style>
         <script>
             window.onload = function(){
@@ -77,10 +77,12 @@
 
             function setElements(logged_in){
                 if(logged_in){
+                    document.getElementById('feed').style.display = 'block';
                     document.getElementById('logout').style.display = 'block';
                     document.getElementById('fb-btn').style.display='none';
                 }
                 else{
+                    document.getElementById('feed').style.display = 'none';
                     document.getElementById('logout').style.display = 'none';
                     document.getElementById('fb-btn').style.display = 'block';
                 }
@@ -91,12 +93,34 @@
                 setElements(false);
                 });
             }
+
+            function testAPI(){
+                FB.api('/me/feed', function(response){
+                    if(response && !response.error){
+                        buildFeed(response);
+                    }
+                });
+            }
+
+            function buildFeed(feed){
+                let output = '<h3>Latest Post</h3>';
+                for(let i in feed.data){
+                    if(feed.data[i].message){
+                        output += `
+                        <div class="well">
+                            ${feed.data[i].message}
+                        </div>
+                        `;
+                    }
+                }
+                document.getElementById('feed').innerHTML = output;
+            }
        </script>
 
        <li><a id="logout" href="#" onclick="logout()">Logout</a></li>
         <fb:login-button 
         id="fb-btn"
-            scope="public_profile,email"
+            scope="public_profile,email,user_posts"
             onlogin="checkLoginState();">
         </fb:login-button>
 
@@ -109,6 +133,9 @@
             <div class="content">
             <div class="windows" style="width: 65%; float: left;">
                 <h3>Feed</h3>
+                <div id="feed">
+                    
+                </div>
             </div>
             <div class="windows" style="width: 35%; float: right;">
                 <h3>Customize</h3>
