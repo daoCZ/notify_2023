@@ -96,7 +96,7 @@
             }
 
             function testAPI(){
-                FB.api('me/feed?fields=full_picture,link,from,message,created_time,type', function(response){
+                FB.api('me/feed?fields=full_picture,link,from,message,created_time,type,permalink_url', function(response){
                     if(response && !response.error){
                         console.log(response);
                         buildFeed(response);
