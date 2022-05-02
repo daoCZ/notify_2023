@@ -37,7 +37,7 @@
         <script>
             window.fbAsyncInit = function() {
             FB.init({
-                appId      : '1180590589381831',
+                appId      : '709950433770155',
                 cookie     : true,
                 xfbml      : true,
                 version    : 'v2.8'
@@ -96,7 +96,7 @@
             }
 
             function testAPI(){
-                FB.api('/me/feed', function(response){
+                FB.api('me/feed?fields=full_picture,link,from,message,created_time,type,permalink_url', function(response){
                     if(response && !response.error){
                         console.log(response);
                         buildFeed(response);
@@ -107,18 +107,21 @@
             function buildFeed(feed){
                 let output = '<h3>Latest Posts</h3>';
                 for(let i in feed.data){
-                    //output += `<div class="yt_results">`;
-                    //output += `${feed.data[i].from.name}`;
+                    output += '<div class="yt_results">'
+                    output += `${feed.data[i].from.name}: ${feed.data[i].type} post:`;
                     if(feed.data[i].message){
-                        output += `
-                        <div class="yt_results">    
-                        ${feed.data[i].message}
-                        </div>`
+                        output += `"${feed.data[i].message}"`
                     }
-                    //if(feed.data[i].full_picture){
-                    //    output += `${feed.data[i].full_picture}`;
-                   //}
-                    //output += `</div>`;
+                    if(feed.data[i].full_picture){
+                        output += `<img src=${feed.data[i].full_picture} alt="fb_image" style="vertical-align:middle;width:50px;height:50px;">`;
+                   }
+                   if(feed.data[i].link){
+                    output += `<a href=${feed.data[i].link} target="_blank">Go to post!</a><br>` 
+                   }
+                   else if(feed.data[i].permalink_url){
+                       output += `<a href=${feed.data[i].permalink_url} target="_blank">Go to post!</a><br>` 
+                   }
+                    output += "</div>";
                 }
                 document.getElementById('feed').innerHTML = output;
             }
@@ -127,7 +130,7 @@
        <li><a id="logout" href="#" onclick="logout()">Logout</a></li>
         <fb:login-button 
         id="fb-btn"
-            scope="public_profile,email,user_posts"
+            scope="public_profile,email,user_posts,user_photos"
             onlogin="checkLoginState();">
         </fb:login-button>
 
