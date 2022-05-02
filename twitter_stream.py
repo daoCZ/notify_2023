@@ -44,7 +44,7 @@ stream_tweet = Linstener(api_key, api_key_secret, access_token, access_token_sec
 # stream_tweet.filter(track=keywords)
 
 # stream by users
-users = ['MehranShakarami', 'veritasium']
+users = ['Pewdiepie', 'veritasium']
 user_ids = []
 
 for user in users:
@@ -66,3 +66,4 @@ for tweet in stream_tweet.tweets:
 df = pd.DataFrame(data, columns=columns)
 
 print(df)
+df.to_csv('tweets.csv')
