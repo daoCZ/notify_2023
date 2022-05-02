@@ -46,8 +46,26 @@ h4 {
     display: flex;
 }
 .yt_results{
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(252, 168, 168);
   border: 1px solid rgb(252, 0, 0);
+  margin:1%;
+  text-align: center;
+  border-radius: 25px;
+  text-align: center;
+}
+
+.twt_results{
+  background-color: rgb(168, 228, 252);
+  border: 1px solid rgb(0, 228, 252);
+  margin:1%;
+  text-align: center;
+  border-radius: 25px;
+  text-align: center;
+}
+
+.fb_results{
+  background-color: rgb(168, 174, 252);
+  border: 1px solid rgb(0, 17, 252);
   margin:1%;
   text-align: center;
   border-radius: 25px;

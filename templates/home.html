@@ -107,7 +107,7 @@
             function buildFeed(feed){
                 let output = '<h3>Latest Posts</h3>';
                 for(let i in feed.data){
-                    output += '<div class="yt_results">'
+                    output += '<div class="fb_results">'
                     if(feed.data[i].full_picture){
                         output += `<img src=${feed.data[i].full_picture} alt="fb_image" style="vertical-align:middle;width:50px;height:50px;"><br>`;
                    }
@@ -130,7 +130,7 @@
             }
        </script>
 
-       <li><a id="logout" href="#" onclick="logout()">Logout</a></li>
+       <li><a id="logout" href="#" onclick="logout()"><img src="https://www.techotopia.com/images/4/46/Firebase_auth_facebook_logout_button.png" alt="Logout"></a></li>
         <fb:login-button 
         id="fb-btn"
             scope="public_profile,email,user_posts,user_photos"
@@ -205,7 +205,7 @@
                             <p>Related twitter accounts:<br>
                             
                             {% for item in name[1] %}
-                            <div class = "yt_results">
+                            <div class = "twt_results">
                                 {{item[0]}}
                                 <img src={{item[2]}} alt="image" style="vertical-align:middle;width:50px;height:50px;">
                                 <a href={{item[1]}} target="_blank">Go to account!</a><br>
