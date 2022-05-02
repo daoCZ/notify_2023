@@ -96,7 +96,7 @@
             }
 
             function testAPI(){
-                FB.api('/me/feed', function(response){
+                FB.api('me/feed?fields=full_picture,link,from', function(response){
                     if(response && !response.error){
                         console.log(response);
                         buildFeed(response);
@@ -124,7 +124,7 @@
        <li><a id="logout" href="#" onclick="logout()">Logout</a></li>
         <fb:login-button 
         id="fb-btn"
-            scope="public_profile,email,user_posts"
+            scope="public_profile,email,user_posts,user_photos"
             onlogin="checkLoginState();">
         </fb:login-button>
 
