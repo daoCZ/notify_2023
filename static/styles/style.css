@@ -36,9 +36,10 @@ h4 {
 .windows {
     background-color: rgb(255, 255, 255, .35);
     margin: 1%;
-    height: 100vh;
+    height: auto;
     border-radius: 4%;
     box-shadow: 10px 10px 10px;
+    padding-bottom: 1%;
 }
 
 .content {
@@ -104,6 +105,7 @@ body {
 	animation: gradient 15s ease infinite;
   /* height: 100vh; */
   margin: 1%;
+
 }
 
 @keyframes gradient {
