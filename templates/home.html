@@ -96,7 +96,7 @@
             }
 
             function testAPI(){
-                FB.api('me/feed?fields=full_picture,link,from,message', function(response){
+                FB.api('me/feed?fields=full_picture,link,from,message,created_time,type', function(response){
                     if(response && !response.error){
                         console.log(response);
                         buildFeed(response);
@@ -108,13 +108,14 @@
                 let output = '<h3>Latest Posts</h3>';
                 for(let i in feed.data){
                     output += '<div class="yt_results">'
-                    //output += `${feed.data[i].from.name}`;
+                    output += `${feed.data[i].type} post by: ${feed.data[i].from.name}`;
                     if(feed.data[i].message){
                         output += `${feed.data[i].message}`
                     }
                     if(feed.data[i].full_picture){
                         output += `<img src=${feed.data[i].full_picture} alt="fb_image" style="vertical-align:middle;width:50px;height:50px;">`;
                    }
+                    output += `<a href=${feed.data[i].link} target="_blank">Go to post!</a><br>`
                     output += "</div>";
                 }
                 document.getElementById('feed').innerHTML = output;
