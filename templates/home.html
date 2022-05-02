@@ -99,24 +99,24 @@
                 FB.api('/me/feed', function(response){
                     if(response && !response.error){
                         console.log(response);
-                        //buildFeed(response);
+                        buildFeed(response);
                     }
                 });
             }
 
-            //function buildFeed(feed){
-            //    let output = '<h3>Latest Post</h3>';
-            //    for(let i in feed.data){
-           //         if(feed.data[i].message){
-           //             output += `
-           //             <div class="well">
-           //                 ${feed.data[i].message}
-           //             </div>
-           //             `;
-           //         }
-            //    }
-          //      document.getElementById('feed').innerHTML = output;
-          //  }
+            function buildFeed(feed){
+                let output = '<h3>Latest Post</h3>';
+                for(let i in feed.data){
+                    if(feed.data[i].message){
+                        output += `
+                        <div class="well">
+                            ${feed.data[i].message}
+                        </div>
+                        `;
+                    }
+                }
+                document.getElementById('feed').innerHTML = output;
+            }
        </script>
 
        <li><a id="logout" href="#" onclick="logout()">Logout</a></li>
