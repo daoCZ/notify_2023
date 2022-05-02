@@ -4,6 +4,9 @@
         <meta charset="utf-8">
         <title>App Home Page</title>
         <link id="style" rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}"></link>
+        <style media="screen">
+            #logout{display:none}
+        </style>
         <script>
             window.onload = function(){
                 var style = document.getElementsByTagName('link')[0];
@@ -58,9 +61,11 @@
             function statusChangeCallback(response){
                 if(response.status === 'connected'){
                     console.log("You're logged in!")
+                    setElements(true);
                 }
                 else{
                     console.log("Not logged in.")
+                    setElements(false);
                 }
             }
        
@@ -69,9 +74,28 @@
                 statusChangeCallback(response);
             });
             }
+
+            function setElements(logged_in){
+                if(logged_in){
+                    document.getElementById('logout').style.display = 'block';
+                    document.getElementById('fb-btn').style.display='none';
+                }
+                else{
+                    document.getElementById('logout').style.display = 'none';
+                    document.getElementById('fb-btn').style.display = 'block';
+                }
+            }
+
+            function logout(){
+                FB.logout(function(response){
+                setElements(false);
+                });
+            }
        </script>
 
+       <li><a id="logout" href="#" onclick="logout()">Logout</a></li>
         <fb:login-button 
+        id="fb-btn"
             scope="public_profile,email"
             onlogin="checkLoginState();">
         </fb:login-button>

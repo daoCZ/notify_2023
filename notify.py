@@ -56,11 +56,11 @@ def result():
         name[0] = "No YouTube channel results for your search."
   
     #Twitter Procedures
-    api_key = 'dpCeHm2DJEwkvCpvtY6ihHQ5k'
-    api_key_secret = '9vQly1Ep2g0YFZC1vkgiWG1g6rw3QR6PTyLlAzoDD1ClevYMkq'
+    api_key = 'a18RC9dAF80Sbm3fplVSMzbEn'
+    api_key_secret = 'bbD1BMVnkP6R0Fvi9t16Q9Fjvc9JpU7cwHD8h0uOIgCwv2i7Zo'
 
-    access_token = '1511094339400835073-To1THLCtzO59Sr4qZnHtGYKvKy1NXt'
-    access_token_secret = 'hsWJEc7bYsrpabn78rRrP6jkbRlc4qESZXnIlbzREkUFY'
+    access_token = '1511094339400835073-E84Wh4yaVDVP7hmDEEcPpevTrFjzRA'
+    access_token_secret = 'kZpGnuhG5K92NcHCvbm1hDdkyR6JHNxNCce4MjoSB0KT2'
     auth = tweepy.OAuthHandler(api_key, api_key_secret)
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
