@@ -1,5 +1,5 @@
 from datetime import date
-from flask import Flask, render_template, request, redirect, url_for, session, state
+from flask import Flask, render_template, request, redirect, url_for, session
 from googleapiclient.discovery import build
 from flask_restful import Api
 from authlib.integrations.flask_client import OAuth
