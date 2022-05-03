@@ -252,7 +252,7 @@ def twitter_auth():
 
 
 @app.route('/google/')
-def google_auth():
+def google():
     global toHTML
     global name2
     global name
