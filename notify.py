@@ -270,7 +270,7 @@ def google_auth():
                 scopes = ['https://www.googleapis.com/auth/youtube.readonly']
                 )
 
-            # flow.run_local_server(port=8090, prompt='consent', authorization_prompt_message="")
+            flow.authorization_url(access_type='offline',prompt='consent',include_granted_scopes='true')
 
             credentials = flow.credentials
 
