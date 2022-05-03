@@ -196,13 +196,13 @@ def twitter():
     redirect_uri = url_for('twitter_auth', _external=True)
     return oauth.twitter.authorize_redirect(redirect_uri)
  
-@app.route('/twitter/auth/')
-def twitter_auth():
-    token = oauth.twitter.authorize_access_token()
-    resp = oauth.twitter.get('account/verify_credentials.json')
-    profile = resp.json()
-    print(" Twitter User", profile)
-    return redirect('/')
+# @app.route('/twitter/auth/')
+# def twitter_auth():
+#     token = oauth.twitter.authorize_access_token()
+#     resp = oauth.twitter.get('account/verify_credentials.json')
+#     profile = resp.json()
+#     print(" Twitter User", profile)
+#     return redirect('/')
 
 
 @app.route('/google/')
