@@ -119,7 +119,7 @@
                         output += `"${feed.data[i].message}"`
                     }
                    if(feed.data[i].link){
-                    output += `<a href=${feed.data[i].link} target="_blank">Go to post!</a><br>` 
+                    output += `<a href=${feed.data[i].link} target="_blank" style="color:mediumpurple;">Go to post!</a><br>` 
                    }
                    else if(feed.data[i].permalink_url){
                        output += `<a href=${feed.data[i].permalink_url} target="_blank">Go to post!</a><br>` 
@@ -191,7 +191,7 @@
                                 <div class = "yt_results">
                                     {{item[0]}}
                                     <img src={{item[1]}} alt="image" style="vertical-align:middle;width:50px;height:50px;">
-                                    <a href={{item[2]}} target="_blank">Go to channel!</a><br>
+                                    <a href={{item[2]}} target="_blank" style="color:mediumpurple;">Go to channel!</a><br>
                                 </div>
                                 {% endfor %}
                                 </p>
@@ -208,7 +208,7 @@
                             <div class = "twt_results">
                                 {{item[0]}}
                                 <img src={{item[2]}} alt="image" style="vertical-align:middle;width:50px;height:50px;">
-                                <a href={{item[1]}} target="_blank">Go to account!</a><br>
+                                <a href={{item[1]}} target="_blank" style="color:mediumpurple;">Go to account!</a><br>
                             </div>
                             {% endfor %}
                             </p>
