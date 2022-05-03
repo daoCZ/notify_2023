@@ -57,7 +57,7 @@ def result():
         name[0] = youtube_list
     else:
         name[0] = "No YouTube channel results for your search."
-  
+
     #Twitter Procedures
     api_key = 'a18RC9dAF80Sbm3fplVSMzbEn'
     api_key_secret = 'bbD1BMVnkP6R0Fvi9t16Q9Fjvc9JpU7cwHD8h0uOIgCwv2i7Zo'

@@ -14,7 +14,7 @@
                 
                 if (test == "contrast.css") {
                     style.setAttribute('href', "{{ url_for('static',filename='styles/contrast') }}.css");
-                    document.getElementById('home').src = "{{ url_for('static',filename='pics/settingsWhite.jpeg') }}";
+                    document.getElementById('home').src = "{{ url_for('static',filename='pics/settingsWhite.png') }}";
                 }
                 else {
                     style.setAttribute('href', "{{ url_for('static',filename='styles/style') }}.css");
@@ -57,7 +57,7 @@
             js.src = "https://connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
-       
+
             function statusChangeCallback(response){
                 if(response.status === 'connected'){
                     testAPI();
@@ -69,7 +69,7 @@
                     setElements(false);
                 }
             }
-       
+
             function checkLoginState() {
             FB.getLoginStatus(function(response) {
                 statusChangeCallback(response);
@@ -110,27 +110,27 @@
                     output += '<div class="fb_results">'
                     if(feed.data[i].full_picture){
                         output += `<img src=${feed.data[i].full_picture} alt="fb_image" style="vertical-align:middle;width:50px;height:50px;"><br>`;
-                   }
-                   let timestamp = `${feed.data[i].created_time}`
-                   let time_out = timestamp.substring(0,10) + "|" + timestamp.substring(11,19) + "|";
-                   output += (time_out);
+                    }
+                    let timestamp = `${feed.data[i].created_time}`
+                    let time_out = timestamp.substring(0,10) + "|" + timestamp.substring(11,19) + "|";
+                    output += (time_out);
                     output += `${feed.data[i].type} post by ${feed.data[i].from.name}`;
                     if(feed.data[i].message){
                         output += `"${feed.data[i].message}"`
                     }
-                   if(feed.data[i].link){
+                    if(feed.data[i].link){
                     output += `<a href=${feed.data[i].link} target="_blank" style="color:mediumpurple;">Go to post!</a><br>` 
-                   }
-                   else if(feed.data[i].permalink_url){
-                       output += `<a href=${feed.data[i].permalink_url} target="_blank" style="color:mediumpurple;">Go to post!</a><br>` 
-                   }
+                    }
+                    else if(feed.data[i].permalink_url){
+                        output += `<a href=${feed.data[i].permalink_url} target="_blank" style="color:mediumpurple;">Go to post!</a><br>` 
+                    }
                     output += "</div>";
                 }
                 document.getElementById('feed').innerHTML = output;
             }
-       </script>
+        </script>
 
-       <li><a id="logout" href="#" onclick="logout()"><img src="https://www.techotopia.com/images/4/46/Firebase_auth_facebook_logout_button.png" alt="Logout"></a></li>
+        <li><a id="logout" href="#" onclick="logout()"><img src="{{ url_for('static',filename='pics/fb_logout.png') }}" alt="Logout" style="height: 40px; width:100px;"></a></li>
         <fb:login-button 
         id="fb-btn"
             scope="public_profile,email,user_posts,user_photos"
