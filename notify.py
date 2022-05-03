@@ -22,10 +22,34 @@ api = Api(app)
 
 oauth = OAuth(app)
 
+toHTML = []
+name2 = []
+name = []
+
 @app.route('/')
 @app.route("/home")
 def home():
-    return render_template("home.html")
+    global toHTML
+    global name
+    global name2
+    if toHTML:
+        if name2:
+            if name:
+                return render_template("home.html", infoYT=toHTML, name2=name2, name=name)
+            else:
+                return render_template("home.html", infoYT=toHTML, name2=name2)
+        else:
+            return render_template("home.html", infoYT=toHTML)
+    elif name2:
+        if name:
+            return render_template("home.html", name2=name2, name=name)
+        else:
+            return render_template("home.html", name=name)
+    elif name:
+        return render_template("home.html", name=name)
+    else:
+        return render_template("home.html")
+
 
 @app.route('/settings')
 def settings():
@@ -33,8 +57,10 @@ def settings():
 
 
 @app.route("/result", methods = ["POST", "GET"])
-
 def result():
+    global toHTML
+    global name
+    global name2
     output = request.form.to_dict()
     namein = output["name"]
     request2 = youtube.search().list(
@@ -90,8 +116,15 @@ def result():
         name[1] = twitter_list
     else:
         name[1] = "No Tweets from any account resulting from your search."
-
-    return render_template("home.html", name = name)
+    if toHTML:
+        if name2:
+            return render_template("home.html", infoYT=toHTML,  name = name, name2 = name)
+        else:
+            return render_template("home.html", infoYT=toHTML,  name = name)
+    elif name2:
+        return render_template("home.html", name2=name2, name=name)
+    else:
+        return render_template("home.html", name = name)
     #for x in response_list:
     #    print(x.get('snippet').get('channelTitle'))
 
@@ -100,6 +133,9 @@ def result():
 
 @app.route("/twit_feed", methods = ["POST", "GET"])
 def twit_feed():
+    global name2
+    global name
+    global toHTML
     api_key = "a18RC9dAF80Sbm3fplVSMzbEn"
     api_key_secret =  "bbD1BMVnkP6R0Fvi9t16Q9Fjvc9JpU7cwHD8h0uOIgCwv2i7Zo"
 
@@ -173,7 +209,15 @@ def twit_feed():
         name2 = result_set
     else:
         name2 = "No tweets available."
-    return render_template("home.html", name2 = name2)
+    if toHTML:
+        if name:
+            return render_template("home.html", infoYT=toHTML, name=name, name2=name2)
+        else:
+            return render_template("home.html", infoYt=toHTML, name2=name2)
+    elif name:
+        return render_template("home.html", name=name, name2=name2)
+    else:
+        return render_template("home.html", name2 = name2)
 
 @app.route('/twitter/')
 def twitter():
@@ -208,6 +252,9 @@ def twitter_auth():
 
 @app.route('/google/')
 def google_auth():
+    global toHTML
+    global name2
+    global name
     credentials = None
 
     #token.pickle stores the users credentials from previously successful logins
@@ -280,7 +327,15 @@ def google_auth():
         videoInfo = [title, thumbnail, link, dateTime]
         toHTML[x] = videoInfo
 
-    return render_template("home.html", infoYT=toHTML)
+    if name2:
+        if name:
+            return render_template("home.html", name2=name2, infoYT=toHTML, name=name)
+        else:
+            return render_template("home.html", name2=name2, infoYT=toHTML)
+    elif name:
+        return render_template("home.html", name=name, infoYT=toHTML)
+    else:
+        return render_template("home.html", infoYT=toHTML)
 
 if __name__ == '__main__':
     app.run(debug= True, port=5000)
