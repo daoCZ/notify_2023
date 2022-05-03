@@ -112,8 +112,8 @@
                         output += `<img src=${feed.data[i].full_picture} alt="fb_image" style="vertical-align:middle;width:50px;height:50px;"><br>`;
                    }
                    let timestamp = `${feed.data[i].created_time}`
-                   let time_out = timestamp.substring(0,10) + " " + timestamp.substring(11,19);
-                   output += ("Date: " + time_out);
+                   let time_out = timestamp.substring(0,10) + "|" + timestamp.substring(11,19) + "|";
+                   output += (time_out);
                     output += `${feed.data[i].type} post by ${feed.data[i].from.name}`;
                     if(feed.data[i].message){
                         output += `"${feed.data[i].message}"`
