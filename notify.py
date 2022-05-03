@@ -25,7 +25,7 @@ oauth = OAuth(app)
 toHTML = []
 name2 = []
 name = []
-
+app.secret_key = b'_SDaf-e^d?\n\dscsd]'
 
 @app.route('/')
 @app.route("/home")
