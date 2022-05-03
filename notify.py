@@ -64,6 +64,10 @@ def result():
     global name2
     output = request.form.to_dict()
     namein = output["name"]
+    name = ["",""]
+    if(namein == ""):
+        name[0] = "No query submitted."
+        return render_template("home.html", name = name)
     request2 = youtube.search().list(
             part="snippet",
             maxResults=5,
@@ -72,7 +76,6 @@ def result():
         )
     response = request2.execute()
     response_list = response.get('items')
-    name = ["",""]
     youtube_list = []
     for x in response_list:
         youtube_entry = []
@@ -144,33 +147,29 @@ def twit_feed():
     access_token_secret = "kZpGnuhG5K92NcHCvbm1hDdkyR6JHNxNCce4MjoSB0KT2"
     output = request.form.to_dict()
     namein = output["name2"]
+    if(namein == ""):
+        return render_template("home.html", name2 = "No query submitted.")
     namein_noat = namein[1:]
     # authorization of consumer key and consumer secret
     auth = tweepy.OAuthHandler(api_key, api_key_secret)
 
     # set access to user's access key and access secret 
     auth.set_access_token(access_token, access_token_secret)
-
-
     api = tweepy.API(auth)
 
-    user = api.get_user(screen_name=namein_noat)
+    user = ""
+    try:
+        user =api.get_user(screen_name = namein_noat)
+    except:
+        return render_template("home.html", name2 = 'No account match: check formatting: Ex: "@username".')
+   
     id = user.id
-
     new_tweets = api.user_timeline(user_id=id,count=5, tweet_mode="extended")
-    #print(new_tweets)
-    #print(api.get_user(user_id=id)._json.get('name'))
-
-    #for tweet in new_tweets:
-        #print(tweet._json.get("name"))
-        #print(tweet._json.get("text"))
-
     sname = namein
-
     count = 0
     result_set =[]
     result_item = []
-
+    
     for status in tweepy.Cursor(api.user_timeline, screen_name=namein, tweet_mode="extended").items():
         result_item = []
         if(len(status._json.get('entities').get("user_mentions")) == 0):
@@ -179,13 +178,6 @@ def twit_feed():
             result_item.append("https://twitter.com/twitter/statuses/" + status.id_str)
             result_item.append(status.created_at)
             result_item.append(status.full_text)
-                            
-            #print(sname)
-            #print(status.user.profile_image_url)
-            #print("https://twitter.com/twitter/statuses/" + status.id_str)
-            #print(status.created_at)
-            #print(status.full_text)
-            #print()
             count = count + 1
             result_set.append(result_item)
             continue
@@ -197,12 +189,6 @@ def twit_feed():
             result_item.append(status.full_text)
             count = count + 1
             result_set.append(result_item)
-            #print(status.user.profile_image_url)
-            #print(status._json.get('entities').get("user_mentions")[0].get('screen_name'))
-            #print("https://twitter.com/twitter/statuses/" + status.id_str)
-            #print(status.created_at)
-            #print(status.full_text)
-            #print()
         if (count == 5):
             break
     

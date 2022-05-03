@@ -155,7 +155,7 @@
                         <label for="Twittersearch">Enter twitter username:</label>
                         <input type="text" id="name2" name="name2">
                         <input type="Submit" class="file_submit">
-                                {% if name2|length > 1 %}
+                                {% if name2 is not string %}
                                     <ul id="myList"></ul>      
                                     {% for item2 in name2 %}
                                         <div class = "twt_results">
