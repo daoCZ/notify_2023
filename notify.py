@@ -1,5 +1,5 @@
 from datetime import date
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flask
 from googleapiclient.discovery import build
 from flask_restful import Api
 from authlib.integrations.flask_client import OAuth
@@ -271,6 +271,8 @@ def google_auth():
                 )
 
             flow.authorization_url(access_type='offline',prompt='consent',include_granted_scopes='true')
+            authorization_response = flask.request.url
+            flow.fetch_token(authorization_response=authorization_response)
 
             credentials = flow.credentials
 
