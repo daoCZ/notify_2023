@@ -137,6 +137,8 @@
             onlogin="checkLoginState();">
         </fb:login-button>
 
+
+
         <div class="main">
             <div class="header">
                 <h1 style="text-align: center; font-size: 150%;"> Notify </h1>
@@ -147,7 +149,17 @@
             <div class="windows" style="width: 65%; float: left;">
                 <h3>Feed</h3>
                 <div id="feed">
-                    hy
+                </div>
+                <div id="tw_feed">
+                    <form class="grid" action="/twit_feed" method="POST">
+                        <label for="Twittersearch">Enter twitter username:</label>
+                        <input type="text" id="name2" name="name2">
+                        <input type="Submit" class="file_submit">
+                            {% if name2|length > 1 %}
+                                <ul id="myList"></ul>      
+                                {{name2[0]}} 
+                            {% endif %}
+                    </form>
                 </div>
             </div>
             <div class="windows" style="width: 35%; float: right;">
@@ -164,7 +176,8 @@
                 <div class="shift-left">
                     <h5>Sort</h5>
                     <input type="radio" id="sort1" name="sorting" value="All Latest Recieved">
-                    <label for="sort1">All Latest Recieved</label><br>
+                    <label for="sort1">Facebook posts by type</label><br>
+
                     <input type="radio" id="sort2" name="sorting" value="All Earliest Recieved">
                     <label for="sort2">All Earliest Recieved</label><br>
                 </div>

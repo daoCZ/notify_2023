@@ -47,7 +47,6 @@ def result():
         youtube_entry.append(x.get('snippet').get('channelTitle'))
         youtube_entry.append(x.get('snippet').get('thumbnails').get('high').get('url'))
         youtube_entry.append("https://www.youtube.com/channel/" + x.get('snippet').get('channelId'))
-        print(youtube_entry[2])
         youtube_list.append(youtube_entry)
 
     if youtube_list:
@@ -94,58 +93,80 @@ def result():
 # from flask import json
 # return render_template("sample.html",test=json.dumps(test))
 
-@app.route("/tw_result", methods = ["POST", "GET"])
-def tw_result():
+@app.route("/twit_feed", methods = ["POST", "GET"])
+def twit_feed():
+    api_key = "a18RC9dAF80Sbm3fplVSMzbEn"
+    api_key_secret =  "bbD1BMVnkP6R0Fvi9t16Q9Fjvc9JpU7cwHD8h0uOIgCwv2i7Zo"
+
+    access_token = "1511094339400835073-E84Wh4yaVDVP7hmDEEcPpevTrFjzRA"
+    access_token_secret = "kZpGnuhG5K92NcHCvbm1hDdkyR6JHNxNCce4MjoSB0KT2"
     output = request.form.to_dict()
-    namein = output["name"]
-
-    #Twitter Code below
-    api_key = 'dpCeHm2DJEwkvCpvtY6ihHQ5k'
-    api_key_secret = '9vQly1Ep2g0YFZC1vkgiWG1g6rw3QR6PTyLlAzoDD1ClevYMkq'
-
-    access_token = '1511094339400835073-To1THLCtzO59Sr4qZnHtGYKvKy1NXt'
-    access_token_secret = 'hsWJEc7bYsrpabn78rRrP6jkbRlc4qESZXnIlbzREkUFY'
-
-    #config = configparser.ConfigParser()
-    #config.read('config.ini')
-
-    #api_key = config['twitter']['api_key']
-    #api_key_secret = config['twitter']['api_key_secret']
-
-    #access_token = config['twitter']['access_token']
-    #access_token_secret = config['twitter']['access_token_secret']
-
-    # authentication
+    namein = output["name2"]
+    namein_noat = namein[1:]
+    # authorization of consumer key and consumer secret
     auth = tweepy.OAuthHandler(api_key, api_key_secret)
+
+    # set access to user's access key and access secret 
     auth.set_access_token(access_token, access_token_secret)
+
 
     api = tweepy.API(auth)
 
-    # user tweets
-    user = namein
-    limit=5
+    user = api.get_user(screen_name=namein_noat)
+    id = user.id
 
-    tweets = tweepy.Cursor(api.user_timeline, screen_name=user, count=200, tweet_mode='extended').items(limit)
+    new_tweets = api.user_timeline(user_id=id,count=5, tweet_mode="extended")
+    #print(new_tweets)
+    #print(api.get_user(user_id=id)._json.get('name'))
 
-    # tweets = api.user_timeline(screen_name=user, count=limit, tweet_mode='extended')
+    #for tweet in new_tweets:
+        #print(tweet._json.get("name"))
+        #print(tweet._json.get("text"))
 
-    # create DataFrame
-    columns = ['User', 'Tweet']
-    data = []
+    sname = namein
 
-    for tweet in tweets:
-        data.append([tweet.user.screen_name, tweet.full_text])
+    count = 0
+    result_set =[]
+    result_item = []
 
-    if data:
-        name = data
-    else:
-        name = "Twitter channel with name - "
-        name += namein
-        name += " - DOES NOT EXIST" 
-
-    return render_template("home.html", name = name)
-    #df = pd.DataFrame(data, columns=columns)
-
+    for status in tweepy.Cursor(api.user_timeline, screen_name=namein, tweet_mode="extended").items():
+        result_item = []
+        if(len(status._json.get('entities').get("user_mentions")) == 0):
+            result_item.append(sname)
+            result_item.append(status.user.profile_image_url)
+            result_item.append("https://twitter.com/twitter/statuses/" + status.id_str)
+            result_item.append(status.created_at)
+            result_item.append(status.full_text)
+                            
+            #print(sname)
+            #print(status.user.profile_image_url)
+            #print("https://twitter.com/twitter/statuses/" + status.id_str)
+            #print(status.created_at)
+            #print(status.full_text)
+            #print()
+            count = count + 1
+            result_set.append(result_item)
+            continue
+        else:
+            result_item.append(status._json.get('entities').get("user_mentions")[0].get('screen_name'))
+            result_item.append(status.user.profile_image_url)
+            result_item.append("https://twitter.com/twitter/statuses/" + status.id_str)
+            result_item.append(status.created_at)
+            result_item.append(status.full_text)
+            count = count + 1
+            result_set.append(result_item)
+            #print(status.user.profile_image_url)
+            #print(status._json.get('entities').get("user_mentions")[0].get('screen_name'))
+            #print("https://twitter.com/twitter/statuses/" + status.id_str)
+            #print(status.created_at)
+            #print(status.full_text)
+            #print()
+        if (count == 5):
+            break
+    name2 = result_set
+    
+    print(name2)
+    return render_template("home.html", name2 = name2)
 
 @app.route('/twitter/')
 def twitter():
