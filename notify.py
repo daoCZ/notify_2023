@@ -1,5 +1,5 @@
 from datetime import date
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from googleapiclient.discovery import build
 from flask_restful import Api
 from authlib.integrations.flask_client import OAuth
@@ -25,6 +25,7 @@ oauth = OAuth(app)
 toHTML = []
 name2 = []
 name = []
+
 
 @app.route('/')
 @app.route("/home")
@@ -266,11 +267,14 @@ def google_auth():
         if credentials and credentials.expired and credentials.refresh_token:
             credentials.refresh(Request())
         else:
+            authorization_url, state = flow.authorization_url(access_type='offline',prompt='consent',include_granted_scopes='true')
+            session['state'] = state
             flow = InstalledAppFlow.from_client_secrets_file("secretfile.json",
-                scopes = ['https://www.googleapis.com/auth/youtube.readonly']
-                )
+                scopes = ['https://www.googleapis.com/auth/youtube.readonly'],
+                state=state)
 
-            flow.authorization_url(access_type='offline',prompt='consent',include_granted_scopes='true')
+
+            flow.redirect_uri = url_for('google', _external=True)
             authorization_response = request.url
             flow.fetch_token(authorization_response=authorization_response)
 
