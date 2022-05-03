@@ -167,9 +167,11 @@ def twit_feed():
             #print()
         if (count == 5):
             break
-    name2 = result_set
     
-    print(name2)
+    if(len(result_set) != 0):
+        name2 = result_set
+    else:
+        name2 = "No tweets available."
     return render_template("home.html", name2 = name2)
 
 @app.route('/twitter/')

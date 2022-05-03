@@ -155,10 +155,24 @@
                         <label for="Twittersearch">Enter twitter username:</label>
                         <input type="text" id="name2" name="name2">
                         <input type="Submit" class="file_submit">
-                            {% if name2|length > 1 %}
-                                <ul id="myList"></ul>      
-                                {{name2[0]}} 
-                            {% endif %}
+                                {% if name2|length > 1 %}
+                                    <ul id="myList"></ul>      
+                                    {% for item2 in name2 %}
+                                        <div class = "yt_results">
+                                        {{item2[0]}}
+                                        <img src={{item2[1]}} alt="image" style="vertical-align:middle;width:50px;height:50px;">
+                                        <a href={{item2[2]}} target="_blank" style="color:mediumpurple;">Go to tweet!</a><br>
+                                        {{item2[4]}}
+                                        {{item2[3]}}
+                                        </div>
+                                    {% endfor %}
+
+                                {% elif name2 is string %}
+                                    <p><br> {{name2}}</p>
+
+                                <!-- error handling for twitter-->
+                                {% endif %}
+
                     </form>
                 </div>
             </div>
