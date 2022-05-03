@@ -130,7 +130,7 @@
             }
         </script>
 
-        <li><a id="logout" href="#" onclick="logout()"><img src="{{ url_for('static',filename='pics/fb_logout.png') }}" alt="Logout" style="height: 40px; width:100px;"></a></li>
+        <li><a id="logout" href="#" onclick="logout()"><img src="{{ url_for('static',filename='pics/fb_logout.png') }}" alt="Logout" style="height: 80px; width:200px;"></a></li>
         <fb:login-button 
         id="fb-btn"
             scope="public_profile,email,user_posts,user_photos"
@@ -174,6 +174,19 @@
                                 {% endif %}
 
                     </form>
+                </div>
+                <div id="yt_feed">
+                    {% if infoYT|length > 1 %}
+                    <ul id="myList"></ul>      
+                                    {% for items in infoYT %}
+                                        <div class = "yt_results">
+                                        <img src={{items[1]}} alt="image" style="vertical-align:middle;width:160px;height:90px;">
+                                        {{items[0]}}<br>
+                                        <p>Posted on: {{items[3]}} <a href={{items[2]}} target="_blank" style="color:mediumpurple;">Go to Video!</a> </p>
+                                        </div>
+                                    {% endfor %}
+                    {% endif %}
+
                 </div>
             </div>
             <div class="windows" style="width: 35%; float: right;">

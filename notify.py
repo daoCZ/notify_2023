@@ -1,3 +1,4 @@
+from datetime import date
 from flask import Flask, render_template, request, redirect, url_for
 from googleapiclient.discovery import build
 from flask_restful import Api
@@ -257,6 +258,8 @@ def google_auth():
         channel_dict[x] = response2.get('items')[x].get('snippet').get('resourceId').get('channelId')
 
     x = 0
+    toHTML = ['','','','','']
+
     for x in range(5):
         request3 = youtube.activities().list(
             part="snippet,contentDetails",
@@ -266,12 +269,18 @@ def google_auth():
 
         response3 = request3.execute()    
         print(response3.get('items')[0].get('snippet').get('title'))
-        print(response3.get('items')[0].get('snippet').get('thumbnails').get('default'))
-        print(response3.get('items')[0].get('contentDetails').get('upload'))
+        title = response3.get('items')[0].get('snippet').get('title')
+        print(response3.get('items')[0].get('snippet').get('thumbnails').get('default').get('url'))
+        thumbnail = response3.get('items')[0].get('snippet').get('thumbnails').get('default').get('url')
+        print(response3.get('items')[0].get('contentDetails').get('upload').get('videoId'))
+        link = "https://www.youtube.com/watch?v="+ response3.get('items')[0].get('contentDetails').get('upload').get('videoId')
         print(response3.get('items')[0].get('snippet').get('publishedAt'))
-        print("hi!")
+        dateTime = response3.get('items')[0].get('snippet').get('publishedAt')
+        print("")
+        videoInfo = [title, thumbnail, link, dateTime]
+        toHTML[x] = videoInfo
 
-    return render_template("home.html")
+    return render_template("home.html", infoYT=toHTML)
 
 if __name__ == '__main__':
     app.run(debug= True, port=5000)
