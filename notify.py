@@ -288,35 +288,15 @@ def google():
     global toHTML
     global name2
     global name
-    credentials = None
 
     #token.pickle stores the users credentials from previously successful logins
     if os.path.exists("token.pickle"):
         with open("token.pickle", "rb") as token:
             credentials = pickle.load(token)
 
-    if not credentials or not credentials.valid:
-        if credentials and credentials.expired and credentials.refresh_token:
-            credentials.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file("secretfile.json",
-                scopes = ['https://www.googleapis.com/auth/youtube.readonly'])
-            authorization_url, state = flow.authorization_url(access_type='offline',prompt='consent',include_granted_scopes='true')
-            # session['state'] = state
-            flow = InstalledAppFlow.from_client_secrets_file("secretfile.json",
-                scopes = ['https://www.googleapis.com/auth/youtube.readonly'],
-                state=state)
-
-
-            flow.redirect_uri = url_for('google', _external=True)
-            authorization_response = request.url
-            flow.fetch_token(authorization_response=authorization_response)
-
-            credentials = flow.credentials
-
-            with open("token.pickle", "wb") as f:
-                pickle.dump(credentials, f)
-
+    if 'credentials' not in flask.session:
+        return redirect('authorize')
+    credentials = google.oauth2.credentials.Credentials(**session['credentials'])
     youtube = build("youtube", "v3", credentials=credentials)
 
     # request = youtube.playlistItems().list(
