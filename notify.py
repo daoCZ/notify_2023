@@ -269,7 +269,7 @@ def oauth2callback():
     state = session['state']
 
     flow = InstalledAppFlow.from_client_secrets_file(
-        CLIENT_SECRETS_FILE, scopes=SCOPES, state=state)
+        CLIENT_SECRETS_FILE, scopes='https://www.googleapis.com/auth/youtube.readonly', state=state)
     flow.redirect_uri = url_for('oauth2callback', _external=True)
 
     # Use the authorization server's response to fetch the OAuth 2.0 tokens.
