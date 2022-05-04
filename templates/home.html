@@ -61,7 +61,7 @@
 
             function statusChangeCallback(response){
                 if(response.status === 'connected'){
-                    testAPI();
+                    testAPI(false);
                     console.log("You're logged in!");
                     setElements(true);
                 }
@@ -96,37 +96,78 @@
                 });
             }
 
-            function testAPI(){
+            function testAPI(sort){
                 FB.api('me/feed?fields=full_picture,link,from,message,created_time,type,permalink_url&limit=10', function(response){
                     if(response && !response.error){
-                        console.log(response);
-                        buildFeed(response);
+                        buildFeed(response, sort);
                     }
                 });
             }
 
-            function buildFeed(feed){
+            function Compare(a,b){
+                if(a[0] < b[0]) return -1;
+                if (a[0] > b[0]) return 1;
+                return 0;
+            }
+
+            function buildFeed(feed, sort){
                 let output = '<h3>Latest Posts</h3>';
+                result_set = [];
+                result_element = [];
+
                 for(let i in feed.data){
-                    output += '<div class="fb_results">'
+                    result_element = [];
+                    result_element.push(feed.data[i].type);
                     if(feed.data[i].full_picture){
-                        output += `<img src=${feed.data[i].full_picture} alt="fb_image" style="vertical-align:middle;width:50px;height:50px;"><br>`;
+                        result_element.push(" Picture: " + feed.data[i].full_picture);
                     }
-                    let timestamp = `${feed.data[i].created_time}`
+                    result_element.push(" Posted By: " + feed.data[i].from.name + " ");
+                    let timestamp = feed.data[i].created_time;
                     let time_out = timestamp.substring(0,10) + "|" + timestamp.substring(11,19) + "|";
-                    output += (time_out);
-                    output += `${feed.data[i].type} post by ${feed.data[i].from.name}`;
+                    result_element.push(" Date: " + time_out + " ");
+
+
                     if(feed.data[i].message){
-                        output += `"${feed.data[i].message}"`
+                        result_element.push(" Message: " + '"' + feed.data[i].message + '" ');
                     }
                     if(feed.data[i].link){
-                    output += `<a href=${feed.data[i].link} target="_blank" style="color:mediumpurple;">Go to post!</a><br>` 
+                        result_element.push(" Link: " + feed.data[i].link);
                     }
                     else if(feed.data[i].permalink_url){
-                        output += `<a href=${feed.data[i].permalink_url} target="_blank" style="color:mediumpurple;">Go to post!</a><br>` 
+                        result_element.push(" Link: " + feed.data[i].permalink_url);
+                    }
+
+                    result_set.push(result_element);
+                }
+                if(sort){
+
+                    result_set2 = result_set.sort(Compare);
+                }
+                else{
+                    result_set2 = result_set;
+                }
+
+                output = "";
+                for (let i in result_set2){
+                    output += '<div class="fb_results">';
+                    for (let j in result_set2[i]){
+                        if(String(result_set2[i][j]).substring(0,10) == " Picture: "){
+                            output += '<img src=' + result_set2[i][j].substring(9) +  ' alt="fb_image" style="vertical-align:middle;width:50px;height:50px;"><br>';
+                        }
+                        else if(String(result_set2[i][j]).substring(0,7) == " Link: "){
+                            output += '<a href='+result_set2[i][j].substring(6) + ' target="_blank" style="color:mediumpurple;">Go to post!</a><br>';
+                        }
+                        else{
+                            output += result_set2[i][j];
+                        }
+
                     }
                     output += "</div>";
+                    
+
                 }
+
+
                 document.getElementById('feed').innerHTML = output;
             }
         </script>
@@ -203,7 +244,7 @@
                 </div>
                 <div class="shift-left">
                     <h5>Sort</h5>
-                    <input type="radio" id="sort1" name="sorting" value="All Latest Received">
+                    <input type="radio" onclick = "testAPI(true)"id="sort1" name="sorting" value="Type Sort">
                     <label for="sort1">Facebook posts by type</label><br>
 
                     <input type="radio" id="sort2" name="sorting" value="All Earliest Received">
