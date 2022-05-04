@@ -109,7 +109,7 @@
 
             function buildFeed(feed, sort){
                 let output = '<h3>Latest Posts</h3>';
-                result_set = [];
+                const result_set = [];
                 result_element = [];
                 for(let i in feed.data){
                     result_element = [];
@@ -148,7 +148,7 @@
                 if(sort){
                     console.log("def working");
                     console.log(result_set);
-                    result_set2 = result_set.sort((a,b) => a[0] - b[0]);
+                    const result_set2 = result_set.sort((a,b) => a[1] - b[1]);
                     console.log(result_set2);
                     const months = ['March', 'Jan', 'Feb', 'Dec'];
                     months.sort();
