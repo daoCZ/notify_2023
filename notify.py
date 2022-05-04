@@ -122,7 +122,7 @@ def result():
         name[1] = "No Tweets from any account resulting from your search."
     if toHTML:
         if name2:
-            return render_template("home.html", infoYT=toHTML,  name = name, name2 = name)
+            return render_template("home.html", infoYT=toHTML,  name = name, name2 = name2)
         else:
             return render_template("home.html", infoYT=toHTML,  name = name)
     elif name2:
@@ -256,7 +256,7 @@ def google():
             flow = InstalledAppFlow.from_client_secrets_file("secretfile.json",
                 scopes = ['https://www.googleapis.com/auth/youtube.readonly'])
             authorization_url, state = flow.authorization_url(access_type='offline',prompt='consent',include_granted_scopes='true')
-            session['state'] = state
+            # session['state'] = state
             flow = InstalledAppFlow.from_client_secrets_file("secretfile.json",
                 scopes = ['https://www.googleapis.com/auth/youtube.readonly'],
                 state=state)
