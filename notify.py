@@ -9,6 +9,7 @@ import pickle
 from urllib import response
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+import google.oauth2.credentials
 
 #import configparser
 #import pandas as pd
@@ -282,9 +283,9 @@ def oauth2callback():
     credentials = flow.credentials
     session['credentials'] = credentials_to_dict(credentials)
 
-    return redirect(url_for('google'))
-@app.route('/google')
-def google():
+    return redirect(url_for('youTubeFeed'))
+@app.route('/youTubeFeed')
+def youTubeFeed():
     global toHTML
     global name2
     global name
