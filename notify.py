@@ -294,7 +294,7 @@ def google():
         with open("token.pickle", "rb") as token:
             credentials = pickle.load(token)
 
-    if 'credentials' not in flask.session:
+    if 'credentials' not in session:
         return redirect('authorize')
     credentials = google.oauth2.credentials.Credentials(**session['credentials'])
     youtube = build("youtube", "v3", credentials=credentials)
