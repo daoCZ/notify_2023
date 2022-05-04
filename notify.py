@@ -1,6 +1,7 @@
 from datetime import date
 from flask import Flask, render_template, request, redirect, url_for, session
 from googleapiclient.discovery import build
+from sqlalchemy import false
 from flask_restful import Api
 from authlib.integrations.flask_client import OAuth
 import tweepy
@@ -26,6 +27,8 @@ toHTML = []
 name2 = []
 name = []
 app.secret_key = b'_SDaf-e^d?\n\dscsd]'
+
+ 
 
 @app.route('/')
 @app.route("/home")
@@ -135,8 +138,13 @@ def result():
 # from flask import json
 # return render_template("sample.html",test=json.dumps(test))
 
+
+allowRT = True 
+
+
 @app.route("/twit_feed", methods = ["POST", "GET"])
 def twit_feed():
+    
     global name2
     global name
     global toHTML
@@ -170,25 +178,37 @@ def twit_feed():
     result_set =[]
     result_item = []
     
-    for status in tweepy.Cursor(api.user_timeline, screen_name=namein, tweet_mode="extended").items():
+    for status in tweepy.Cursor(api.user_timeline, screen_name=namein, tweet_mode="extended").items(5):
         result_item = []
-        if(len(status._json.get('entities').get("user_mentions")) == 0):
-            result_item.append(sname)
-            result_item.append(status.user.profile_image_url)
-            result_item.append("https://twitter.com/twitter/statuses/" + status.id_str)
-            result_item.append(status.created_at)
-            result_item.append(status.full_text)
-            count = count + 1
-            result_set.append(result_item)
-            continue
-        else:
-            result_item.append(status._json.get('entities').get("user_mentions")[0].get('screen_name'))
-            result_item.append(status.user.profile_image_url)
-            result_item.append("https://twitter.com/twitter/statuses/" + status.id_str)
-            result_item.append(status.created_at)
-            result_item.append(status.full_text)
-            count = count + 1
-            result_set.append(result_item)
+        if allowRT == True:
+            if(len(status._json.get('entities').get("user_mentions")) != 0):
+                result_item.append(status._json.get('entities').get("user_mentions")[0].get('screen_name'))
+                result_item.append(status.user.profile_image_url)
+                result_item.append("https://twitter.com/twitter/statuses/" + status.id_str)
+                result_item.append(status.created_at)
+                result_item.append(status.full_text)
+                count = count + 1
+                result_set.append(result_item)
+                continue
+            else:
+                result_item.append(sname)
+                result_item.append(status.user.profile_image_url)
+                result_item.append("https://twitter.com/twitter/statuses/" + status.id_str)
+                result_item.append(status.created_at)
+                result_item.append(status.full_text + "normal")
+                count = count + 1
+                result_set.append(result_item)
+        
+        if allowRT == False:
+            if status.full_text.startswith("RT @") == False:
+                result_item.append(sname)
+                result_item.append(status.user.profile_image_url)
+                result_item.append("https://twitter.com/twitter/statuses/" + status.id_str)
+                result_item.append(status.created_at)
+                result_item.append(status.full_text)
+                count = count + 1
+                result_set.append(result_item)
+
         if (count == 5):
             break
     
@@ -236,6 +256,22 @@ def twitter_auth():
     print(" Twitter User", profile)
     return redirect('/')
 
+
+
+@app.route('/twit_feed/rt_filter/', methods=['POST']) 
+def rt_filter():
+    global allowRT 
+    if allowRT == True:
+        allowRT = False
+        return "RTs blocked"
+    else:
+        allowRT = True 
+        return "RTs allowed"
+    #print("toggle!", flush=True)
+
+   
+
+    
 
 @app.route('/google/')
 def google():

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <meta charset="utf-8">
         <title>App Home Page</title>
         <link id="style" rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}"></link>
@@ -207,6 +208,28 @@
 
                     <input type="radio" id="sort2" name="sorting" value="All Earliest Received">
                     <label for="sort2">All Earliest Received</label><br>
+
+
+                    <input name="PyButton" type="button" onclick="pyScript()" value="RT Filter"   
+                    style = background-color:white; />
+                    <p id= 'rt_b'></p>
+                    <script type="text/javascript">
+                        function pyScript(){
+                            var jqXHR = $.ajax({
+                                type: "POST",
+                                url: '/twit_feed/rt_filter/',
+                                async: false,
+
+                            });
+                            return jqXHR.responseText;
+                        }
+                        $('#PyButton').click(function(){
+                            result = pyScript();
+                            document.getElementById('PyButton').value = result;
+                            console.log('Got back ' + result);
+                        });
+                    </script>
+
                 </div>
                 <div class="shift-left">
                     <h5>Filter</h5>
