@@ -272,8 +272,8 @@ def rt_filter():
         return "RTs allowed"
     #print("toggle!", flush=True)
 
-@app.route('/google/')
-def google():
+# @app.route('/google/')
+# def google():
 @app.route('/authorize')
 def authorize():
     # Create flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
@@ -318,6 +318,7 @@ def oauth2callback():
     session['credentials'] = credentials_to_dict(credentials)
 
     return redirect(url_for('youTubeFeed'))
+
 @app.route('/youTubeFeed')
 def youTubeFeed():
     global toHTML
