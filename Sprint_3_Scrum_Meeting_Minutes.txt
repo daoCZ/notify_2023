@@ -1,0 +1,38 @@
+SCRUM Meeting 1 for Notify
+Meeting Date: 04/22/2022
+Minutes from 04/22/2022
+
+More local testing has been done with Oauth 2.0 and we successfully have tried it with different 
+users. We have made the choice to switch from Instagram to the Facebook API because it is slightly 
+easier to authenticate a login. However it does prove more restrictive as you can not load your 
+live feed in and only have access to your personal account. The front end has been redone to make 
+it more user friendly and aesthetically pleasing. The twitter Feed has been tested to correctly 
+receive the API requests sent from the login page.
+---------------------------------------------------------------------------------------------------
+
+SCRUM Meeting 2 for Notify
+Meeting Date: 04/27/2022
+Minutes from 04/27/2022
+
+For front-end development, Anas focused on creating links for login pages like Facebook and 
+Twitter, and formatting all the images into an aesthetically pleasing style, while helping 
+implement back-end code into Heroku and remote hosting, however YouTube ran into some difficulties.
+Facebook is going well, where posts are being outputted to the feed, but not completely formatted.
+We stopped using the Twitter login as it was not necessary and reformatted some code.  The search
+bar for both YouTube and Twitter were formatted and improved functionally where there are no 
+conflicts between searching for both YouTube and Twitter users. 
+---------------------------------------------------------------------------------------------------
+
+SCRUM Meeting 3 for Notify
+Meeting Date: 5/02/2022
+Minutes from 5/02/2022
+
+For back-end development, Matthew worked on Facebook development for the feed box, displaying 
+posts, the username, and the picture of the profile, and formatting the output. For twitter, 
+Anthony started outputting the timeline into the notification feed while not using OAuth Twitter 
+login as it is not needed for data collection and parsing. Brian and Matthew worked on YouTube 
+OAuth and remote hosting to Heroku simultaneously. Anas continued to work on the aesthetics of the
+ website and also finalizing accessibility features for the website. For the last meeting, the 
+back-end goal is to have a functional notification feed that is formatted correctly, while the 
+front-end focuses on implementing outputs into an aesthetically pleasing style.
+---------------------------------------------------------------------------------------------------

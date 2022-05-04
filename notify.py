@@ -260,7 +260,6 @@ def twitter_auth():
     return redirect('/')
 
 
-<<<<<<< HEAD
 
 @app.route('/twit_feed/rt_filter/', methods=['POST']) 
 def rt_filter():
@@ -273,13 +272,8 @@ def rt_filter():
         return "RTs allowed"
     #print("toggle!", flush=True)
 
-   
-
-    
-
 @app.route('/google/')
 def google():
-=======
 @app.route('/authorize')
 def authorize():
     # Create flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
@@ -326,7 +320,6 @@ def oauth2callback():
     return redirect(url_for('youTubeFeed'))
 @app.route('/youTubeFeed')
 def youTubeFeed():
->>>>>>> 0bf8c8fea3039be41fbe9d586e02256794bd8270
     global toHTML
     global name2
     global name
