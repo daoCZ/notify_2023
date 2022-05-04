@@ -163,18 +163,17 @@
                     result_set2 = result_set;
                 }
 
-                for (let items in result_set2){
-                    console.log("Item: " + items);
+                for (let i in result_set2){
                     output += '<div class="fb_results">';
-                    for (let item in items){
-                        if(String(item).substring(0,9) == "Picture: "){
+                    for (let j in i){
+                        if(String(result_set2[i][j]).substring(0,9) == "Picture: "){
                             output += '<img src=' + item.substring(9) +  ' alt="fb_image" style="vertical-align:middle;width:50px;height:50px;"><br>';
                         }
-                        else if(String(item).substring(0,6) == "Link: "){
-                            output += '<a href='+item.substring(6) + ' target="_blank" style="color:mediumpurple;">Go to post!</a><br>';
+                        else if(String(result_set2[i][j]).substring(0,6) == "Link: "){
+                            output += '<a href='+result_set2[i][j].substring(6) + ' target="_blank" style="color:mediumpurple;">Go to post!</a><br>';
                         }
                         else{
-                            output += item;
+                            output += result_set2[i][j];
                         }
 
                     }
