@@ -107,9 +107,9 @@
                 });
             }
 
-            function Compare(a,b){
-                if(a[1] < b[1]) return -1;
-                if (a[1] > b[1]) return 1;
+            function Compare(a,b,x){
+                if(a[x] < b[x]) return -1;
+                if (a[x] > b[x]) return 1;
                 return 0;
             }
 
@@ -158,7 +158,7 @@
                 if(sort){
                     console.log("def working");
                     console.log(result_set);
-                    result_set2 = result_set.sort(Compare);
+                    result_set2 = result_set.sort(Compare(a,b,1));
                     console.log(result_set2);
                     console.log(String(result_set2[2][1]));
                     console.log(String(result_set2[2][2]));
