@@ -111,9 +111,11 @@
                 let output = '<h3>Latest Posts</h3>';
                 const result_set = [];
                 result_element = [];
+                x = 0;
                 for(let i in feed.data){
                     result_element = [];
                     output += '<div class="fb_results">'
+                    result_element.push(x);
                     result_element.push(feed.data[i].type);
                     result_element.push(feed.data[i].created_time);
                     
@@ -144,11 +146,12 @@
 
                     output += "</div>";
                     result_set.push(result_element);
+                    x += 1;
                 }
                 if(sort){
                     console.log("def working");
                     console.log(result_set);
-                    const result_set2 = result_set.sort((a,b) => b[1] - a[1]);
+                    const result_set2 = result_set.sort((a,b) => b[0] - a[0]);
                     console.log(result_set2);
                     const months = ['March', 'Jan', 'Feb', 'Dec'];
                     months.sort();
