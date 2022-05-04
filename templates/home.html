@@ -153,8 +153,8 @@
                     console.log(result_set);
                     const result_set2 = result_set.sort((a,b) => String(b[1]) - String(a[1]));
                     console.log(result_set2);
-                    console.log(String(result_set2[1]));
-                    console.log(String(result_set2[2]));
+                    console.log(String(result_set2[2][1]));
+                    console.log(String(result_set2[2][2]));
                 }
                 document.getElementById('feed').innerHTML = output;
             }
