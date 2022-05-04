@@ -96,12 +96,8 @@
             }
 
             function testAPI(sort){
-                if(sort){
-                    console.log("Working!! Woohoo!");
-                }
                 FB.api('me/feed?fields=full_picture,link,from,message,created_time,type,permalink_url&limit=10', function(response){
                     if(response && !response.error){
-                        //console.log(response);
                         buildFeed(response, sort);
                     }
                 });
@@ -120,44 +116,31 @@
 
                 for(let i in feed.data){
                     result_element = [];
-                    //output += '<div class="fb_results">';
                     result_element.push(feed.data[i].type);
-                    result_element.push("Name: " + feed.data[i].from.name);
+                    if(feed.data[i].full_picture){
+                        result_element.push(" Picture: " + feed.data[i].full_picture);
+                    }
+                    result_element.push(" Posted By: " + feed.data[i].from.name + " ");
                     let timestamp = feed.data[i].created_time;
                     let time_out = timestamp.substring(0,10) + "|" + timestamp.substring(11,19) + "|";
-                    result_element.push("Date: " + time_out);
-                    //output += (time_out);
-                    //new_time += `${feed.data[i].type} post by ${feed.data[i].from.name}`;
-                    //result_element.push(output);
-
-                    if(feed.data[i].full_picture){
-                        result_element.push("Picture: " + feed.data[i].full_picture);
-                        //output += `<img src=${feed.data[i].full_picture} alt="fb_image" style="vertical-align:middle;width:50px;height:50px;"><br>`;
-
-                    }
+                    result_element.push(" Date: " + time_out + " ");
 
 
                     if(feed.data[i].message){
-                        result_element.push("Message: " + feed.data[i].message);
-                        //output += `"${feed.data[i].message}"`
+                        result_element.push(" Message: " + '"' + feed.data[i].message + '" ');
                     }
                     if(feed.data[i].link){
-                        result_element.push("Link: " + feed.data[i].link);
-                        //output += `<a href=${feed.data[i].link} target="_blank" style="color:mediumpurple;">Go to post!</a><br>` 
+                        result_element.push(" Link: " + feed.data[i].link);
                     }
                     else if(feed.data[i].permalink_url){
-                        result_element.push("Link: " + feed.data[i].permalink_url);
-                        //output += `<a href=${feed.data[i].permalink_url} target="_blank" style="color:mediumpurple;">Go to post!</a><br>` 
+                        result_element.push(" Link: " + feed.data[i].permalink_url);
                     }
 
-                    //output += "</div>";
                     result_set.push(result_element);
                 }
                 if(sort){
-                    console.log("def working");
-                    console.log(result_set);
+
                     result_set2 = result_set.sort(Compare);
-                    console.log(result_set2);
                 }
                 else{
                     result_set2 = result_set;
@@ -167,10 +150,10 @@
                 for (let i in result_set2){
                     output += '<div class="fb_results">';
                     for (let j in result_set2[i]){
-                        if(String(result_set2[i][j]).substring(0,9) == "Picture: "){
+                        if(String(result_set2[i][j]).substring(0,10) == " Picture: "){
                             output += '<img src=' + result_set2[i][j].substring(9) +  ' alt="fb_image" style="vertical-align:middle;width:50px;height:50px;"><br>';
                         }
-                        else if(String(result_set2[i][j]).substring(0,6) == "Link: "){
+                        else if(String(result_set2[i][j]).substring(0,7) == " Link: "){
                             output += '<a href='+result_set2[i][j].substring(6) + ' target="_blank" style="color:mediumpurple;">Go to post!</a><br>';
                         }
                         else{
@@ -183,7 +166,6 @@
 
                 }
 
-                console.log(output);
 
                 document.getElementById('feed').innerHTML = output;
             }
