@@ -242,7 +242,7 @@ def twitter_auth():
 @app.route('/authorize')
 def authorize():
     # Create flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
-    flow = flow.Flow.from_client_secrets_file(
+    flow = InstalledAppFlow.from_client_secrets_file(
         CLIENT_SECRETS_FILE, scopes='https://www.googleapis.com/auth/youtube.readonly')
 
     # The URI created here must exactly match one of the authorized redirect URIs
@@ -268,7 +268,7 @@ def oauth2callback():
     # verified in the authorization server response.
     state = session['state']
 
-    flow = flow.Flow.from_client_secrets_file(
+    flow = InstalledAppFlow.from_client_secrets_file(
         CLIENT_SECRETS_FILE, scopes=SCOPES, state=state)
     flow.redirect_uri = url_for('oauth2callback', _external=True)
 
