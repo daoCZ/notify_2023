@@ -9,6 +9,7 @@ import pickle
 from urllib import response
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+import google.oauth2.credentials
 
 #import configparser
 #import pandas as pd
@@ -47,7 +48,7 @@ def home():
         if name:
             return render_template("home.html", name2=name2, name=name)
         else:
-            return render_template("home.html", name=name)
+            return render_template("home.html", name2=name2)
     elif name:
         return render_template("home.html", name=name)
     else:
@@ -210,7 +211,7 @@ def twit_feed():
 
 @app.route('/twitter/')
 def twitter():
-   
+
     # Twitter Oauth Config
     TWITTER_CLIENT_ID = os.environ.get('TWITTER_CLIENT_ID')
     TWITTER_CLIENT_SECRET = os.environ.get('TWITTER_CLIENT_SECRET')
@@ -229,7 +230,7 @@ def twitter():
     )
     redirect_uri = url_for('twitter_auth', _external=True)
     return oauth.twitter.authorize_redirect(redirect_uri)
- 
+
 @app.route('/twitter/auth/')
 def twitter_auth():
     token = oauth.twitter.authorize_access_token()
@@ -269,7 +270,7 @@ def oauth2callback():
     state = session['state']
 
     flow = InstalledAppFlow.from_client_secrets_file(
-        CLIENT_SECRETS_FILE, scopes=SCOPES, state=state)
+        CLIENT_SECRETS_FILE, scopes='https://www.googleapis.com/auth/youtube.readonly', state=state)
     flow.redirect_uri = url_for('oauth2callback', _external=True)
 
     # Use the authorization server's response to fetch the OAuth 2.0 tokens.
@@ -280,43 +281,23 @@ def oauth2callback():
     # ACTION ITEM: In a production app, you likely want to save these
     #              credentials in a persistent database instead.
     credentials = flow.credentials
-    session['credentials'] = dict(credentials)
+    session['credentials'] = credentials_to_dict(credentials)
 
-    return redirect(url_for('google/'))
-@app.route('/google/')
-def google():
+    return redirect(url_for('youTubeFeed'))
+@app.route('/youTubeFeed')
+def youTubeFeed():
     global toHTML
     global name2
     global name
-    credentials = None
 
     #token.pickle stores the users credentials from previously successful logins
     if os.path.exists("token.pickle"):
         with open("token.pickle", "rb") as token:
             credentials = pickle.load(token)
 
-    if not credentials or not credentials.valid:
-        if credentials and credentials.expired and credentials.refresh_token:
-            credentials.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file("secretfile.json",
-                scopes = ['https://www.googleapis.com/auth/youtube.readonly'])
-            authorization_url, state = flow.authorization_url(access_type='offline',prompt='consent',include_granted_scopes='true')
-            # session['state'] = state
-            flow = InstalledAppFlow.from_client_secrets_file("secretfile.json",
-                scopes = ['https://www.googleapis.com/auth/youtube.readonly'],
-                state=state)
-
-
-            flow.redirect_uri = url_for('google', _external=True)
-            authorization_response = request.url
-            flow.fetch_token(authorization_response=authorization_response)
-
-            credentials = flow.credentials
-
-            with open("token.pickle", "wb") as f:
-                pickle.dump(credentials, f)
-
+    if 'credentials' not in session:
+        return redirect('authorize')
+    credentials = google.oauth2.credentials.Credentials(**session['credentials'])
     youtube = build("youtube", "v3", credentials=credentials)
 
     # request = youtube.playlistItems().list(
@@ -376,6 +357,14 @@ def google():
         return render_template("home.html", name=name, infoYT=toHTML)
     else:
         return render_template("home.html", infoYT=toHTML)
+
+def credentials_to_dict(credentials):
+    return {'token': credentials.token,
+            'refresh_token': credentials.refresh_token,
+            'token_uri': credentials.token_uri,
+            'client_id': credentials.client_id,
+            'client_secret': credentials.client_secret,
+            'scopes': credentials.scopes}
 
 if __name__ == '__main__':
     app.run(debug= True, port=5000)
