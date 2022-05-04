@@ -48,7 +48,7 @@ def home():
         if name:
             return render_template("home.html", name2=name2, name=name)
         else:
-            return render_template("home.html", name=name)
+            return render_template("home.html", name2=name2)
     elif name:
         return render_template("home.html", name=name)
     else:
@@ -211,7 +211,7 @@ def twit_feed():
 
 @app.route('/twitter/')
 def twitter():
-   
+
     # Twitter Oauth Config
     TWITTER_CLIENT_ID = os.environ.get('TWITTER_CLIENT_ID')
     TWITTER_CLIENT_SECRET = os.environ.get('TWITTER_CLIENT_SECRET')
@@ -230,7 +230,7 @@ def twitter():
     )
     redirect_uri = url_for('twitter_auth', _external=True)
     return oauth.twitter.authorize_redirect(redirect_uri)
- 
+
 @app.route('/twitter/auth/')
 def twitter_auth():
     token = oauth.twitter.authorize_access_token()
