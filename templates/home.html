@@ -108,8 +108,8 @@
             }
 
             function Compare(a,b){
-                if(a[1] < b[1]) return -1;
-                if (a[1] > b[1]) return 1;
+                if(a[0] < b[0]) return -1;
+                if (a[0] > b[0]) return 1;
                 return 0;
             }
 
@@ -121,7 +121,7 @@
                 for(let i in feed.data){
                     result_element = [];
                     //output += '<div class="fb_results">';
-                    result_element.push(feed.data[i].type + " Post");
+                    result_element.push(feed.data[i].type);
                     result_element.push("Name: " + feed.data[i].from.name);
                     let timestamp = feed.data[i].created_time;
                     let time_out = timestamp.substring(0,10) + "|" + timestamp.substring(11,19) + "|";
@@ -155,6 +155,7 @@
                 }
                 if(sort){
                     console.log("def working");
+                    console.log(result_set);
                     result_set2 = result_set.sort(Compare);
                     console.log(result_set2);
                 }
