@@ -164,6 +164,7 @@
                 }
 
                 for (let items in result_set2){
+                    console.log("Item: " + items);
                     output += '<div class="fb_results">';
                     for (let item in items){
                         if(String(item).substring(0,9) == "Picture: "){
