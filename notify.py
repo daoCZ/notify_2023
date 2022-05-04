@@ -282,7 +282,7 @@ def oauth2callback():
     credentials = flow.credentials
     session['credentials'] = credentials_to_dict(credentials)
 
-    return redirect(url_for('google/'))
+    return redirect(url_for('google'))
 @app.route('/google')
 def google():
     global toHTML
