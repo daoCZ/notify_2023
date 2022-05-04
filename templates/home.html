@@ -107,9 +107,9 @@
                 });
             }
 
-            function Compare(a,b,x){
-                if(a[x] < b[x]) return -1;
-                if (a[x] > b[x]) return 1;
+            function Compare(a,b){
+                if(a[1] < b[1]) return -1;
+                if (a[1] > b[1]) return 1;
                 return 0;
             }
 
@@ -117,40 +117,40 @@
                 let output = '<h3>Latest Posts</h3>';
                 result_set = [];
                 result_element = [];
-                x = 0;
+
                 for(let i in feed.data){
                     result_element = [];
-                    output += '<div class="fb_results">'
-                    result_element.push(x);
-                    result_element.push(feed.data[i].type);
-                    result_element.push(feed.data[i].created_time);
-                    
-                    let timestamp = `${feed.data[i].created_time}`
-                    let time_out = timestamp.substring(0,10) + "|" + timestamp.substring(11,19) + "|";
-                    output += (time_out);
-                    output += `${feed.data[i].type} post by ${feed.data[i].from.name}`;
-                    result_element.push(output);
+                    //output += '<div class="fb_results">';
+                    result_element.push(feed.data[i].type + "Post");
+                    result_element.push("Name: " + feed.data[i].from.name);
+                    result_element.push("Date: " + feed.data[i].created_time);
+                    //let timestamp = `${feed.data[i].created_time}`
+                    //let time_out = timestamp.substring(0,10) + "|" + timestamp.substring(11,19) + "|";
+                    //output += (time_out);
+                    //output += `${feed.data[i].type} post by ${feed.data[i].from.name}`;
+                    //result_element.push(output);
+
                     if(feed.data[i].full_picture){
-                        result_element.push(feed.data[i].full_picture);
-                        output += `<img src=${feed.data[i].full_picture} alt="fb_image" style="vertical-align:middle;width:50px;height:50px;"><br>`;
+                        result_element.push("Picture: " + feed.data[i].full_picture);
+                        //output += `<img src=${feed.data[i].full_picture} alt="fb_image" style="vertical-align:middle;width:50px;height:50px;"><br>`;
 
                     }
 
 
                     if(feed.data[i].message){
-                        result_element.push(feed.data[i].message);
-                        output += `"${feed.data[i].message}"`
+                        result_element.push("Message: " + feed.data[i].message);
+                        //output += `"${feed.data[i].message}"`
                     }
                     if(feed.data[i].link){
-                        result_element.push(feed.data[i].link);
-                        output += `<a href=${feed.data[i].link} target="_blank" style="color:mediumpurple;">Go to post!</a><br>` 
+                        result_element.push("Link: " + feed.data[i].link);
+                        //output += `<a href=${feed.data[i].link} target="_blank" style="color:mediumpurple;">Go to post!</a><br>` 
                     }
                     else if(feed.data[i].permalink_url){
-                        result_element.push(feed.data[i].permalink_url);
-                        output += `<a href=${feed.data[i].permalink_url} target="_blank" style="color:mediumpurple;">Go to post!</a><br>` 
+                        result_element.push("Link: " + feed.data[i].permalink_url);
+                        //output += `<a href=${feed.data[i].permalink_url} target="_blank" style="color:mediumpurple;">Go to post!</a><br>` 
                     }
 
-                    output += "</div>";
+                    //output += "</div>";
                     result_set.push(result_element);
                     x += 1;
                 }
@@ -158,11 +158,33 @@
                 if(sort){
                     console.log("def working");
                     console.log(result_set);
-                    result_set2 = result_set.sort(Compare(a,b,1));
-                    console.log(result_set2);
-                    console.log(String(result_set2[2][1]));
-                    console.log(String(result_set2[2][2]));
+                    result_set2 = result_set.sort(Compare);
                 }
+                else{
+                    result_set2 = result_set;
+                }
+
+                for (let items in result_set2){
+                    output += '<div class="fb_results">';
+                    for (let item in items){
+                        if(String(item).substring(0,9) == "Picture: "){
+                            output += '<img src=' + item.substring(9) +  ' alt="fb_image" style="vertical-align:middle;width:50px;height:50px;"><br>';
+                        }
+                        else if(String(item).substring(0,6) == "Link: "){
+                            output += '<a href='+item.substring(6) + ' target="_blank" style="color:mediumpurple;">Go to post!</a><br>';
+                        }
+                        else{
+                            output += item;
+                        }
+
+                    }
+                    output += "</div>";
+                    Console.log(output);
+
+                }
+
+
+
                 document.getElementById('feed').innerHTML = output;
             }
         </script>
