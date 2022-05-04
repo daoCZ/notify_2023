@@ -101,7 +101,7 @@
                 }
                 FB.api('me/feed?fields=full_picture,link,from,message,created_time,type,permalink_url&limit=10', function(response){
                     if(response && !response.error){
-                        console.log(response);
+                        //console.log(response);
                         buildFeed(response, sort);
                     }
                 });
@@ -146,9 +146,11 @@
                     result_set.push(result_element);
                 }
                 if(sort){
+                    console.log("def working");
+                    console.log(result_set);
                     result_set = result_set.sort((a,b) => a[0] - b[0]);
+                    console.log(result_set);
                 }
-                console.log(result_set);
                 document.getElementById('feed').innerHTML = output;
             }
         </script>
