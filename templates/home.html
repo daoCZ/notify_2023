@@ -151,7 +151,7 @@
                 if(sort){
                     console.log("def working");
                     console.log(result_set);
-                    const result_set2 = result_set.sort((a,b) => String(b[1]) - String(a[1]));
+                    const result_set2 = Array.from(result_set).sort((a,b) => String(b.at(1)) - String(a.at(1)));
                     console.log(result_set2);
                     console.log(String(result_set2[2][1]));
                     console.log(String(result_set2[2][2]));
