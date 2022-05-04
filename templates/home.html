@@ -146,7 +146,7 @@
                     result_set.push(result_element);
                 }
                 if(sort){
-                    result_set = result_set.sort((a,b) => b[0] - a[0]);
+                    result_set = result_set.sort((a,b) => a[0] - b[0]);
                 }
                 console.log(result_set);
                 document.getElementById('feed').innerHTML = output;
